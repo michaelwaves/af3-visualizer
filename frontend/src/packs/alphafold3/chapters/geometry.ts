@@ -3,6 +3,7 @@ import type { Chapter } from '@engine/types'
 export const geometryChapters: Chapter[] = [
   {
     id: 'templates',
+    stage: 'templates',
     title: 'Templates',
     blurb: 'Algorithm 16 — borrowing a structure that already exists.',
     section: 'Trunk',
@@ -42,6 +43,7 @@ export const geometryChapters: Chapter[] = [
   },
   {
     id: 'triangles',
+    stage: 'pairformer',
     title: 'Triangles',
     blurb: 'Algorithms 12–15 — teaching a matrix that distances obey geometry.',
     section: 'Trunk',
@@ -86,6 +88,7 @@ export const geometryChapters: Chapter[] = [
   },
   {
     id: 'pairformer',
+    stage: 'pairformer',
     title: 'Pairformer',
     blurb: 'Algorithm 17 — 48 blocks, 159 million parameters.',
     section: 'Trunk',

@@ -5,8 +5,16 @@ from __future__ import annotations
 import torch
 
 from capture import Recorder, downsample, to_matrix
-from constants import MAP_SIZE, NUM_MSA, NUM_TEMPLATES, SHARED_ALIASES
+from constants import (
+    ATTENTION_MAPS,
+    MAP_SIZE,
+    NUM_MSA,
+    NUM_TEMPLATES,
+    SHARED_ALIASES,
+    SINGLE_CHANNELS,
+)
 from model_builder import BuiltModel, count_parameters
+from provenance import attention_provenance, tensor_provenance
 from writer import quantise
 
 
@@ -60,25 +68,28 @@ def model_payload(built: BuiltModel, elapsed: float) -> dict:
 
 
 def activation_payload(recorder: Recorder, attention: dict) -> dict:
-    maps = {
-        name: quantise(downsample(torch.tensor(to_matrix(tensor)), MAP_SIZE))
-        for name, tensor in recorder.tensors.items()
-        if tensor.ndim >= 3 and tensor.shape[1] == tensor.shape[2]
-    }
-    heads = {
-        name: quantise(downsample(tensor[0, 0], MAP_SIZE))
-        for name, tensor in list(attention.items())[:4]
-    }
-    singles = {
-        name: quantise(tensor[0, :, :128], 3)
-        for name, tensor in recorder.tensors.items()
-        if tensor.ndim == 3 and tensor.shape[1] != tensor.shape[2]
-    }
+    """Every drawn matrix, plus a record of exactly how it was reduced to 2-D."""
+    provenance: dict[str, dict] = {}
+    maps, singles, heads = {}, {}, {}
+
+    for name, tensor in recorder.tensors.items():
+        is_pair = tensor.ndim >= 3 and tensor.shape[1] == tensor.shape[2]
+        reduced = torch.tensor(to_matrix(tensor)) if is_pair else tensor[0, :, :SINGLE_CHANNELS]
+        drawn = downsample(reduced, MAP_SIZE) if is_pair else reduced
+        (maps if is_pair else singles)[name] = quantise(drawn, 3)
+        provenance[name] = tensor_provenance(name, tensor, drawn, recorder, is_pair)
+
+    for name, tensor in list(attention.items())[:ATTENTION_MAPS]:
+        drawn = downsample(tensor[0, 0], MAP_SIZE)
+        heads[name] = quantise(drawn, 3)
+        provenance[name] = attention_provenance(name, tensor, drawn)
+
     return {
         "size": MAP_SIZE,
         "pairMaps": maps,
         "singleMaps": singles,
         "attentionHeads": heads,
+        "provenance": provenance,
         "shapes": {name: list(tensor.shape) for name, tensor in recorder.tensors.items()},
     }
 

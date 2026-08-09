@@ -3,6 +3,7 @@ import type { Chapter } from '@engine/types'
 export const embeddingChapters: Chapter[] = [
   {
     id: 'embedder',
+    stage: 'embed',
     title: 'Input embedder',
     blurb: 'Algorithm 2 — atoms in, two representations out.',
     section: 'Inputs',
@@ -43,6 +44,7 @@ export const embeddingChapters: Chapter[] = [
   },
   {
     id: 'relpos',
+    stage: 'relpos',
     title: 'Relative position encoding',
     blurb: 'Algorithm 3 — where a token sits, relative to every other.',
     section: 'Inputs',

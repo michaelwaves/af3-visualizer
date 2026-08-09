@@ -1,5 +1,7 @@
 import type { ModelPack } from '@engine/types'
 import { alphafold3Axes } from './axes'
+import { alphafold3Inspectables } from './inspectables'
+import { alphafold3Pipeline } from './pipeline'
 import { settingChapters } from './chapters/setting'
 import { tokenChapters } from './chapters/tokens'
 import { embeddingChapters } from './chapters/embedding'
@@ -28,6 +30,8 @@ export const alphafold3Pack: ModelPack = {
   ],
   scenes,
   axes: alphafold3Axes,
+  pipeline: alphafold3Pipeline,
+  inspectables: alphafold3Inspectables,
   data: {
     structure: 'data/structure.json',
     features: 'data/features.json',

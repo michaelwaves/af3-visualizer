@@ -1,4 +1,5 @@
 import { usePackData } from '@engine/store'
+import type { Provenance } from '@engine/inspector/types'
 
 export interface StructureData {
   name: string
@@ -75,6 +76,7 @@ export interface ActivationData {
   pairMaps: Record<string, number[][]>
   singleMaps: Record<string, number[][]>
   attentionHeads: Record<string, number[][]>
+  provenance: Record<string, Provenance>
   shapes: Record<string, number[]>
 }
 

@@ -1,6 +1,12 @@
 """Knobs shared by the extraction passes and the payload builders."""
 
-MAP_SIZE = 96
+# Pair maps are kept at full token resolution: 199×199 is small enough to ship,
+# and the inspector lets people download exactly what they are looking at.
+MAP_SIZE = 200
+SINGLE_CHANNELS = 128
+
+# Only the heads the scenes actually draw; each full-resolution map is ~250 kB.
+ATTENTION_MAPS = 2
 NUM_MSA = 64
 NUM_TEMPLATES = 2
 NUM_SAMPLE_STEPS = 32

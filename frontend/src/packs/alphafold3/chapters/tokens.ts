@@ -3,6 +3,7 @@ import type { Chapter } from '@engine/types'
 export const tokenChapters: Chapter[] = [
   {
     id: 'tokens',
+    stage: 'featurise',
     title: 'Tokens and atoms',
     blurb: 'The one idea that lets a protein, a drug and an ion share a sequence model.',
     section: 'Inputs',
@@ -51,6 +52,7 @@ export const tokenChapters: Chapter[] = [
   },
   {
     id: 'features',
+    stage: 'featurise',
     title: 'What actually goes in',
     blurb: 'Six tensors, and none of them is a structure.',
     section: 'Inputs',

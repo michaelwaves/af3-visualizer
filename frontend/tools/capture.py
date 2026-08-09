@@ -10,13 +10,29 @@ from torch import Tensor, nn
 
 
 @dataclass
+class Source:
+    """Where a recorded tensor came from, so the viewer can be told honestly."""
+
+    module: str
+    qualified_name: str
+    algorithm: str | None = None
+
+
+@dataclass
 class Recorder:
     """Collects module outputs by name, keeping only the first hit for each."""
 
     tensors: dict[str, Tensor] = field(default_factory=dict)
+    sources: dict[str, Source] = field(default_factory=dict)
     handles: list = field(default_factory=list)
 
-    def watch(self, name: str, module: nn.Module) -> None:
+    def watch(self, name: str, module: nn.Module, algorithm: str | None = None) -> None:
+        self.sources[name] = Source(
+            module=type(module).__name__,
+            qualified_name=f"{type(module).__module__}.{type(module).__name__}",
+            algorithm=algorithm,
+        )
+
         def hook(_module, _inputs, output):
             tensor = output[0] if isinstance(output, tuple) else output
             if torch.is_tensor(tensor) and name not in self.tensors:
@@ -71,3 +87,15 @@ def downsample(matrix: Tensor, size: int) -> Tensor:
     if matrix.shape[-1] <= size:
         return matrix
     return torch.nn.functional.adaptive_avg_pool2d(matrix[None, None], size)[0, 0]
+
+
+def statistics(tensor: Tensor) -> dict:
+    """Summary of the *full* tensor, before any reduction the viewer will see."""
+    values = tensor.flatten()
+    return {
+        "min": round(float(values.min()), 4),
+        "max": round(float(values.max()), 4),
+        "mean": round(float(values.mean()), 4),
+        "std": round(float(values.std()), 4),
+        "elements": int(values.numel()),
+    }

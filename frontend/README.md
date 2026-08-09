@@ -41,6 +41,22 @@ Model weights are randomly initialised, so shapes, schedules and dynamics are
 real but the predicted values are not a trained prediction. The payloads say so,
 and the chapters that show them say so too.
 
+### Where the pictures come from
+
+Every matrix on screen is a real tensor, but each one had to be flattened to 2-D
+to be drawn. **Inspect tensors** in the bottom-right opens a drawer that names
+the module that produced it, its full shape, the exact reduction applied (for a
+pair map: the mean over its 128 channels), summary statistics over the *full*
+tensor, and whether the values depend on the untrained weights. From there you
+can download the matrix as CSV or JSON — exactly the numbers being drawn.
+
+Colour uses the 2nd–98th percentile of each matrix rather than min/max, because
+a single outlier otherwise flattens a whole map to one shade.
+
+`activations.json` is ~5 MB raw and ~1 MB gzipped; pair maps are kept at full
+199 × 199 token resolution so the inspector shows real values, not a thumbnail.
+Serve it with compression.
+
 ## Adding another model
 
 The engine knows nothing about proteins. A pack supplies chapters and scenes;
@@ -68,8 +84,13 @@ To add a pack — a PLM, Evo 2, Boltz, AlphaGenome:
    print symbols only (`pairwise [b, n, n, dp]`); the legend beside the scene
    expands whichever axes the current beat mentions, and hovering a symbol in
    either place highlights it in the other.
-4. Export a `ModelPack` and point `data` at your JSON.
-5. Render it: `<Explainer pack={yourPack} />`.
+4. Define `pipeline` — a `PipelineStage[]` in forward-pass order, each naming the
+   class actually invoked. Tag each chapter with `stage: '<id>'` and the map at
+   the top of the scene tracks where the reader is.
+5. Define `inspectables(data)` — the matrices the tensor inspector can show and
+   export, each with the `Provenance` the extractor recorded.
+6. Export a `ModelPack` and point `data` at your JSON.
+7. Render it: `<Explainer pack={yourPack} />`.
 
 Reusable primitives worth knowing: `TensorSlab` (a matrix as a lit slab),
 `Caption` (billboarded label with a shape annotation), `Flow` (data moving

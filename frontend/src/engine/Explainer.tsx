@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
+import { InspectorPanel } from './inspector/InspectorPanel'
 import { AxisLegend } from './narrative/AxisLegend'
 import { NarrativePanel } from './narrative/NarrativePanel'
+import { PipelineMap } from './narrative/PipelineMap'
 import { SceneCanvas } from './scene/SceneCanvas'
 import { useExplainer } from './store'
 import { useKeyboardNavigation } from './useKeyboardNavigation'
@@ -14,6 +16,8 @@ export const Explainer = ({ pack }: { pack: ModelPack }) => {
   const loadPack = useExplainer((s) => s.loadPack)
   const freeLook = useExplainer((s) => s.freeLook)
   const toggleFreeLook = useExplainer((s) => s.toggleFreeLook)
+  const inspectedKey = useExplainer((s) => s.inspectedKey)
+  const inspect = useExplainer((s) => s.inspect)
   const [status, setStatus] = useState<'loading' | 'ready' | 'failed'>('loading')
   useKeyboardNavigation()
 
@@ -43,10 +47,15 @@ export const Explainer = ({ pack }: { pack: ModelPack }) => {
 
       <div className="stage">
         <SceneCanvas />
+        <PipelineMap />
         <AxisLegend />
-        <button className="look-toggle" onClick={toggleFreeLook}>
-          {freeLook ? 'guided camera' : 'free look'}
-        </button>
+        <InspectorPanel />
+        <div className="stage-tools">
+          <button onClick={() => inspect(inspectedKey ? null : firstInspectable(pack))}>
+            {inspectedKey ? 'close tensors' : 'inspect tensors'}
+          </button>
+          <button onClick={toggleFreeLook}>{freeLook ? 'guided camera' : 'free look'}</button>
+        </div>
       </div>
     </main>
   )
@@ -62,6 +71,10 @@ const fetchPackData = async (pack: ModelPack): Promise<Record<string, unknown>> 
   )
   return Object.fromEntries(entries)
 }
+
+/** Opening the inspector lands on the first tensor the pack exposes. */
+const firstInspectable = (pack: ModelPack): string | null =>
+  pack.inspectables(useExplainer.getState().data)[0]?.key ?? null
 
 const Splash = ({ message }: { message: string }) => (
   <div className="splash">

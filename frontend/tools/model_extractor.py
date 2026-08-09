@@ -63,12 +63,14 @@ def extract_model(settings: ExtractionSettings, sequence: str, msa_profile=None)
 def _watch_trunk(built: BuiltModel) -> Recorder:
     model = built.model
     recorder = Recorder()
-    recorder.watch("relative_position_encoding", model.relative_position_encoding)
-    recorder.watch("template_embedding", model.template_embedder)
-    recorder.watch("msa_embedding", model.msa_module)
-    recorder.watch("outer_product_mean", model.msa_module.layers[0][0])
-    recorder.watch("msa_pair_weighted_averaging", model.msa_module.layers[0][1])
-    recorder.watch("triangle_multiplication_outgoing", model.pairformer.layers[0][0])
-    recorder.watch("single_inputs", model.input_embedder)
-    recorder.watch("trunk_single", model.confidence_head.pairformer_stack)
+    recorder.watch("relative_position_encoding", model.relative_position_encoding, "Algorithm 3")
+    recorder.watch("template_embedding", model.template_embedder, "Algorithm 16")
+    recorder.watch("msa_embedding", model.msa_module, "Algorithm 8")
+    recorder.watch("outer_product_mean", model.msa_module.layers[0][0], "Algorithm 9")
+    recorder.watch("msa_pair_weighted_averaging", model.msa_module.layers[0][1], "Algorithm 10")
+    recorder.watch(
+        "triangle_multiplication_outgoing", model.pairformer.layers[0][0], "Algorithms 12–15"
+    )
+    recorder.watch("single_inputs", model.input_embedder, "Algorithm 2")
+    recorder.watch("trunk_single", model.confidence_head.pairformer_stack, "Algorithm 17")
     return recorder

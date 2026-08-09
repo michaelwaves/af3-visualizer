@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react'
 import type { Vector3Tuple } from 'three'
+import type { InspectableTensor } from './inspector/types'
 
 /** Where the camera sits for a beat. Interpolated between beats by the director. */
 export interface CameraShot {
@@ -45,9 +46,25 @@ export interface AxisDefinition {
   group?: string
 }
 
+/** One step of the model's forward pass, named after the code that runs it. */
+export interface PipelineStage {
+  id: string
+  label: string
+  /** The class actually invoked, e.g. `PairformerStack`. */
+  module: string
+  /** Where it lives, for people who want to go read it. */
+  qualifiedName?: string
+  algorithm?: string
+  /** Marks stages that run inside the recycling loop. */
+  loop?: boolean
+  note?: string
+}
+
 export interface Chapter {
   id: string
   title: string
+  /** Which pipeline stage this chapter is explaining. */
+  stage?: string
   /** Short line shown in the table of contents. */
   blurb: string
   /** Section grouping in the table of contents, e.g. "Trunk". */
@@ -74,6 +91,10 @@ export interface ModelPack {
   scenes: Record<string, SceneComponent>
   /** Axis symbols used across the pack's shape annotations. */
   axes: Record<string, AxisDefinition>
+  /** The forward pass in execution order, for the progress map. */
+  pipeline: PipelineStage[]
+  /** Matrices the inspector can show and export, derived from the loaded data. */
+  inspectables: (data: Record<string, unknown>) => InspectableTensor[]
   /** JSON payloads fetched once at boot, keyed by name. */
   data: Record<string, string>
 }

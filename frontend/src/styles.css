@@ -95,14 +95,19 @@ body {
   min-width: 0;
 }
 
-.look-toggle {
+.stage-tools {
   position: absolute;
   right: 1rem;
   bottom: 1rem;
-  padding: 0.4rem 0.8rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.stage-tools button {
+  padding: 0.42rem 0.85rem;
   border: 1px solid var(--line);
   border-radius: 2rem;
-  background: rgba(12, 14, 19, 0.8);
+  background: rgba(12, 14, 19, 0.82);
   color: var(--muted);
   font-family: var(--mono);
   font-size: 0.68rem;
@@ -110,9 +115,335 @@ body {
   backdrop-filter: blur(6px);
 }
 
-.look-toggle:hover {
+.stage-tools button:hover {
   color: var(--text);
+  border-color: var(--accent);
+}
+
+/* ---------- pipeline map ---------- */
+
+.pipeline {
+  position: absolute;
+  top: 0.85rem;
+  left: 1.1rem;
+  right: 1.1rem;
+  padding: 0.55rem 0.8rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: rgba(10, 12, 17, 0.8);
+  backdrop-filter: blur(9px);
+}
+
+.pipeline-toggle {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.6rem;
+  border: 0;
+  background: none;
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.pipeline-toggle:hover {
+  color: var(--accent);
+}
+
+.pipeline-rail {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin: 0;
+  padding: 0 5rem 0 0;
+  list-style: none;
+}
+
+.pipeline-stage {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  padding: 0.15rem 0.35rem 0;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* the connector between stages */
+.pipeline-stage::before {
+  content: '';
+  position: absolute;
+  top: 0.42rem;
+  left: -50%;
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+}
+
+.pipeline-stage:first-child::before {
+  display: none;
+}
+
+.pipeline-dot {
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin: 0 auto 0.3rem;
+  border: 1px solid var(--dim);
+  border-radius: 50%;
+  background: var(--bg);
+  position: relative;
+  z-index: 1;
+  transition: all 0.2s ease;
+}
+
+.pipeline-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pipeline-stage-done .pipeline-dot {
+  background: var(--dim);
   border-color: var(--dim);
+}
+
+.pipeline-stage-done .pipeline-label {
+  color: var(--muted);
+}
+
+.pipeline-stage-active .pipeline-dot {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(79, 209, 197, 0.2);
+}
+
+.pipeline-stage-active .pipeline-label {
+  color: var(--text);
+}
+
+/* stages inside the recycling loop */
+.pipeline-stage-loop .pipeline-dot {
+  border-radius: 2px;
+}
+
+.pipeline-stage:hover .pipeline-label {
+  color: var(--text);
+}
+
+.pipeline-detail {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.6rem;
+  line-height: 1.45;
+}
+
+.pipeline-detail code {
+  display: block;
+  font-family: var(--mono);
+  color: #f0a05a;
+  /* Class names are long and the rail is narrow; shrink rather than truncate. */
+  font-size: 0.54rem;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.pipeline-detail em {
+  display: block;
+  font-style: normal;
+  color: var(--accent);
+}
+
+.pipeline-detail span {
+  display: block;
+  color: var(--dim);
+}
+
+.pipeline-footnote {
+  margin: 0.6rem 0 0;
+  font-size: 0.65rem;
+  color: var(--dim);
+}
+
+.pipeline-footnote strong {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* ---------- tensor inspector ---------- */
+
+.inspector {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(30rem, 60%);
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--line);
+  background: rgba(8, 10, 14, 0.95);
+  backdrop-filter: blur(14px);
+  z-index: 30;
+}
+
+.inspector-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.inspector-head h2 {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.inspector-head button {
+  border: 0;
+  background: none;
+  color: var(--dim);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.inspector-head button:hover {
+  color: var(--text);
+}
+
+.inspector-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.inspector-tab {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  cursor: pointer;
+}
+
+.inspector-tab:hover {
+  color: var(--text);
+}
+
+.inspector-tab-on {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(79, 209, 197, 0.1);
+}
+
+.inspector-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.matrix-figure {
+  margin: 0 0 1rem;
+}
+
+.matrix-canvas {
+  width: 100%;
+  image-rendering: pixelated;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg);
+  cursor: crosshair;
+}
+
+.matrix-figure figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  color: var(--muted);
+}
+
+.matrix-figure figcaption strong {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.matrix-hint {
+  color: var(--dim);
+}
+
+.provenance {
+  margin: 0;
+}
+
+.provenance-row {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 0.6rem;
+  padding: 0.32rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.provenance-row dt {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+}
+
+.provenance-row dd {
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.provenance-row dd code {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: #f0a05a;
+  word-break: break-word;
+}
+
+.inspector-actions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.8rem 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.inspector-actions button {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #141824;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.inspector-actions button:hover {
+  border-color: var(--accent);
 }
 
 /* ---------- table of contents ---------- */

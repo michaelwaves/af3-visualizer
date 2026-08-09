@@ -11,6 +11,8 @@ interface ExplainerState {
   freeLook: boolean
   /** Axis symbol the reader is pointing at, so chip and legend highlight together. */
   hoveredAxis: string | null
+  /** Key of the tensor open in the inspector, or null when it is closed. */
+  inspectedKey: string | null
   data: Record<string, unknown>
 
   loadPack: (pack: ModelPack, data: Record<string, unknown>) => void
@@ -22,6 +24,7 @@ interface ExplainerState {
   toggleAutoplay: () => void
   toggleFreeLook: () => void
   setHoveredAxis: (axis: string | null) => void
+  inspect: (key: string | null) => void
 }
 
 export const useExplainer = create<ExplainerState>((set, get) => ({
@@ -32,6 +35,7 @@ export const useExplainer = create<ExplainerState>((set, get) => ({
   autoplay: true,
   freeLook: false,
   hoveredAxis: null,
+  inspectedKey: null,
   data: {},
 
   loadPack: (pack, data) => set({ pack, data }),
@@ -73,7 +77,16 @@ export const useExplainer = create<ExplainerState>((set, get) => ({
   toggleFreeLook: () => set({ freeLook: !get().freeLook }),
 
   setHoveredAxis: (axis) => set({ hoveredAxis: axis }),
+
+  inspect: (key) => set({ inspectedKey: key }),
 }))
+
+/** Matrices the active pack exposes for inspection, in declaration order. */
+export const useInspectables = () => {
+  const pack = useExplainer((s) => s.pack)
+  const data = useExplainer((s) => s.data)
+  return pack ? pack.inspectables(data) : []
+}
 
 /** The axis glossary entry for a symbol, or null if the pack does not define one. */
 export const useAxis = (symbol: string) =>

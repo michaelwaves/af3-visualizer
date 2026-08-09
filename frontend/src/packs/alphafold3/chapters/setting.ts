@@ -3,6 +3,7 @@ import type { Chapter } from '@engine/types'
 export const settingChapters: Chapter[] = [
   {
     id: 'complex',
+    stage: 'featurise',
     title: 'One model, every molecule',
     blurb: 'AlphaFold 2 folded protein chains. AlphaFold 3 predicts whole complexes.',
     section: 'The problem',

@@ -3,6 +3,7 @@ import type { Chapter } from '@engine/types'
 export const confidenceChapters: Chapter[] = [
   {
     id: 'confidence',
+    stage: 'confidence',
     title: 'Knowing what it does not know',
     blurb: 'Algorithm 31 — four heads that grade the prediction.',
     section: 'Outputs',
@@ -48,6 +49,7 @@ export const confidenceChapters: Chapter[] = [
   },
   {
     id: 'overview',
+    stage: 'confidence',
     title: 'The whole model',
     blurb: '456,701,750 parameters, measured on an L40.',
     section: 'Outputs',

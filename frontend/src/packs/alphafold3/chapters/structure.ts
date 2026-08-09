@@ -3,6 +3,7 @@ import type { Chapter } from '@engine/types'
 export const structureChapters: Chapter[] = [
   {
     id: 'noise',
+    stage: 'sample',
     title: 'Diffusion, and what it replaced',
     blurb: 'AlphaFold 2 built frames. AlphaFold 3 denoises point clouds.',
     section: 'Structure',
@@ -53,6 +54,7 @@ export const structureChapters: Chapter[] = [
   },
   {
     id: 'diffusion-module',
+    stage: 'denoise',
     title: 'The diffusion module',
     blurb: 'Algorithm 20 — atoms up to tokens, and back down.',
     section: 'Structure',

@@ -3,6 +3,7 @@ import type { Chapter } from '@engine/types'
 export const evolutionChapters: Chapter[] = [
   {
     id: 'msa',
+    stage: 'msa',
     title: 'Fifteen thousand relatives',
     blurb: 'Evolution as a measuring instrument.',
     section: 'Trunk',
@@ -58,6 +59,7 @@ export const evolutionChapters: Chapter[] = [
   },
   {
     id: 'msa-pair',
+    stage: 'msa',
     title: 'How the alignment talks to the pair',
     blurb: 'Algorithms 9 and 10 — a two-way channel.',
     section: 'Trunk',
