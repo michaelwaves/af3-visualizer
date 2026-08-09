@@ -1,0 +1,9 @@
+node_modules/
+dist/
+shots/
+*.tsbuildinfo
+
+# public/data is generated but committed on purpose: it lets the site run
+# without a GPU. Regenerate with tools/extract.py.
+__pycache__/
+*.pyc
