@@ -18,18 +18,19 @@ export const TrianglesScene = () => {
   const showMultiply = useDrive('multiply')
   const showAttend = useDrive('attend')
 
+  // The ring stands in the XY plane so the triangle reads face-on, like the maps.
   const points = useMemo(
     () =>
       Array.from({ length: NODES }, (_, index) => {
         const angle = (index / NODES) * Math.PI * 2
-        return [Math.cos(angle) * RADIUS, 0, Math.sin(angle) * RADIUS] as [number, number, number]
+        return [Math.cos(angle) * RADIUS, Math.sin(angle) * RADIUS, 0] as [number, number, number]
       }),
     [],
   )
 
   return (
     <group>
-      <group position={[-5.5, 0.6, 0]}>
+      <group position={[-5.4, 0, 0]}>
         <Instances limit={NODES} range={NODES}>
           <sphereGeometry args={[0.19, 16, 16]} />
           <meshStandardMaterial roughness={0.3} emissiveIntensity={0.4} />
@@ -43,15 +44,15 @@ export const TrianglesScene = () => {
         </Instances>
 
         <Line points={[points[0], points[5]]} color={palette.pair} lineWidth={3} />
-        <Caption text="i" position={[points[0][0] * 1.2, 0.4, points[0][2] * 1.2]} size={0.3} />
-        <Caption text="j" position={[points[5][0] * 1.2, 0.4, points[5][2] * 1.2]} size={0.3} />
+        <Caption text="i" position={[points[0][0] * 1.22, points[0][1] * 1.22, 0]} size={0.32} />
+        <Caption text="j" position={[points[5][0] * 1.22, points[5][1] * 1.22, 0]} size={0.32} />
 
         {showTriangle > 0.05 && <SweepingK points={points} intensity={showTriangle} />}
 
         <Caption
           id="triangle"
-          text="edge (i,j) ← Σₖ f( (i,k), (j,k) )"
-          position={[0, -1.4, RADIUS + 1]}
+          text="edge (i,j)  ←  sum over k of  f( (i,k), (j,k) )"
+          position={[0, -RADIUS - 1.2, 0]}
           color={palette.pair}
           size={0.28}
         />
@@ -62,8 +63,8 @@ export const TrianglesScene = () => {
         matrix={activations?.pairMaps.triangle_multiplication_outgoing ?? []}
         label="triangle multiplication"
         shape="outgoing · incoming"
-        position={[5, 0, -2.2]}
-        size={5}
+        position={[2.4, 2.6, 0]}
+        size={4.4}
         visible={showMultiply > 0.05}
       />
 
@@ -72,8 +73,8 @@ export const TrianglesScene = () => {
         matrix={activations?.attentionHeads.attention_0 ?? []}
         label="triangle attention"
         shape="starting node · head 0"
-        position={[5, 0, 3.6]}
-        size={5}
+        position={[8, -2.4, 0]}
+        size={4.4}
         visible={showAttend > 0.05}
         smooth
       />
@@ -115,7 +116,12 @@ const SweepingK = ({
       </group>
       <Line points={[points[0], k]} color={palette.template} lineWidth={2} opacity={intensity} transparent />
       <Line points={[points[5], k]} color={palette.template} lineWidth={2} opacity={intensity} transparent />
-      <Caption text="k" position={[k[0] * 1.25, 0.4, k[2] * 1.25]} color={palette.template} size={0.28} />
+      <Caption
+        text="k"
+        position={[k[0] * 1.25, k[1] * 1.25, 0]}
+        color={palette.template}
+        size={0.3}
+      />
     </group>
   )
 }

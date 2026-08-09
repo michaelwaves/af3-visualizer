@@ -1,0 +1,134 @@
+.app {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr) var(--scope);
+  grid-template-rows: var(--header) minmax(0, 1fr) auto;
+  grid-template-areas:
+    'header header header'
+    'rail   stage  scope'
+    'term   term   term';
+  height: 100%;
+}
+
+/* ---------- header ---------- */
+
+.header {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 0 22px;
+  background: linear-gradient(112deg, var(--ocean-900) 0%, var(--ocean-700) 52%, var(--ocean-500) 100%);
+  color: var(--paper);
+  border-bottom: 1px solid var(--ocean-900);
+}
+
+.header__title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 620;
+  letter-spacing: -0.015em;
+}
+
+.header__subtitle {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: var(--sky-200);
+  font-weight: 400;
+}
+
+.header__subtitle code {
+  font-family: var(--font-mono);
+  color: var(--sky-100);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0 5px;
+  border-radius: 4px;
+}
+
+.header__chips {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.11);
+  border: 1px solid rgba(174, 220, 245, 0.24);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.chip__key {
+  color: var(--sky-200);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 9.5px;
+}
+
+.chip__value {
+  font-family: var(--font-mono);
+  color: var(--paper);
+  font-size: 11px;
+}
+
+/* ---------- rails ---------- */
+
+.rail {
+  grid-area: rail;
+  overflow-y: auto;
+  background: var(--ocean-800);
+  color: var(--sky-100);
+  border-right: 1px solid var(--ocean-900);
+  padding-bottom: 24px;
+}
+
+.scope {
+  grid-area: scope;
+  overflow-y: auto;
+  background: var(--paper);
+  border-left: 1px solid var(--line);
+}
+
+.stage {
+  grid-area: stage;
+  overflow-y: auto;
+  background: var(--fog-100);
+  padding: 20px 26px 40px;
+}
+
+.stage__inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.terminal {
+  grid-area: term;
+  height: var(--terminal);
+  background: var(--ocean-900);
+  border-top: 1px solid var(--ocean-700);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- shared panel furniture ---------- */
+
+.panel {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}

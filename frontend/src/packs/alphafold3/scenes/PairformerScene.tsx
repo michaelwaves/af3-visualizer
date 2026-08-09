@@ -48,18 +48,18 @@ export const PairformerScene = () => {
         matrix={activations?.attentionHeads.attention_1 ?? []}
         label="pair → attention bias"
         shape="[b, h, n, n]"
-        position={[6.6, top * 0.45, 0]}
-        size={4.4}
+        position={[7.2, top * 0.45, 0]}
+        size={4.6}
         color={palette.single}
         visible={showBias > 0.05}
         smooth
       />
       <Flow
-        from={[2.3, top * 0.45, 0]}
-        to={[4.6, top * 0.45, 0]}
+        from={[2.2, top * 0.45, 0]}
+        to={[4.8, top * 0.45, 0]}
         color={palette.single}
         progress={showBias}
-        arc={0.1}
+        arc={0.08}
         pulse
       />
 

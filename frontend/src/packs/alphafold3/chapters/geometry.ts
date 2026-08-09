@@ -12,7 +12,7 @@ export const geometryChapters: Chapter[] = [
       {
         id: 'idea',
         text: 'If a related protein has already been solved, its geometry is evidence. Templates are how that evidence enters — not as coordinates, but as a *binned distance map*.',
-        camera: { position: [0.6, 14, 24], target: [0.6, 0, 0] },
+        camera: { position: [-0.6, -0.3, 24], target: [-0.6, -0.3, 0] },
         highlight: ['template'],
       },
       {
@@ -52,7 +52,7 @@ export const geometryChapters: Chapter[] = [
       {
         id: 'constraint',
         text: 'The pair representation is a 199 × 199 grid of guesses. Left alone, nothing stops it believing i is near j, j is near k, and i is far from k — which no arrangement of points in space can satisfy.',
-        camera: { position: [-1, 11, 23], target: [-1, 0, 0.5] },
+        camera: { position: [0.6, 0, 25], target: [0.6, 0, 0] },
         highlight: ['triangle'],
       },
       {

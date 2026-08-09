@@ -3,6 +3,7 @@ import { InspectorPanel } from './inspector/InspectorPanel'
 import { AxisLegend } from './narrative/AxisLegend'
 import { NarrativePanel } from './narrative/NarrativePanel'
 import { PipelineMap } from './narrative/PipelineMap'
+import { ReferencePanel } from './reference/ReferencePanel'
 import { SceneCanvas } from './scene/SceneCanvas'
 import { useExplainer } from './store'
 import { useKeyboardNavigation } from './useKeyboardNavigation'
@@ -18,6 +19,8 @@ export const Explainer = ({ pack }: { pack: ModelPack }) => {
   const toggleFreeLook = useExplainer((s) => s.toggleFreeLook)
   const inspectedKey = useExplainer((s) => s.inspectedKey)
   const inspect = useExplainer((s) => s.inspect)
+  const referenceOpen = useExplainer((s) => s.referenceOpen)
+  const toggleReference = useExplainer((s) => s.toggleReference)
   const [status, setStatus] = useState<'loading' | 'ready' | 'failed'>('loading')
   useKeyboardNavigation()
 
@@ -50,7 +53,9 @@ export const Explainer = ({ pack }: { pack: ModelPack }) => {
         <PipelineMap />
         <AxisLegend />
         <InspectorPanel />
+        <ReferencePanel />
         <div className="stage-tools">
+          <button onClick={toggleReference}>{referenceOpen ? 'close' : 'maths & code'}</button>
           <button onClick={() => inspect(inspectedKey ? null : firstInspectable(pack))}>
             {inspectedKey ? 'close tensors' : 'inspect tensors'}
           </button>

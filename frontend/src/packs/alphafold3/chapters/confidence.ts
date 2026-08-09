@@ -12,7 +12,7 @@ export const confidenceChapters: Chapter[] = [
       {
         id: 'why',
         text: 'A structure prediction without a confidence estimate is unusable — you cannot tell a solved loop from an invented one. AlphaFold\'s confidence heads are as important as its coordinates.',
-        camera: { position: [1, 11, 26], target: [1, 0, 0.5] },
+        camera: { position: [0, 0, 25], target: [0, 0, 0] },
       },
       {
         id: 'plddt',

@@ -1,0 +1,117 @@
+/* Body copy, the step-to-step navigation and the provenance footer. */
+
+.prose {
+  margin: 20px 0 22px;
+  max-width: 68ch;
+}
+
+.prose p {
+  margin: 0 0 13px;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--slate-700);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  background: var(--fog-200);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+/* ---------- stepper ---------- */
+
+.stepper {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.stepper__button {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  color: var(--slate-600);
+  font-size: 12.5px;
+  text-align: left;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+
+.stepper__button--next {
+  text-align: right;
+}
+
+.stepper__button:hover:not(:disabled) {
+  border-color: var(--sky-400);
+  color: var(--ocean-700);
+}
+
+.stepper__button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ---------- provenance ---------- */
+
+.provenance {
+  margin-top: 26px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--sky-400);
+  border-radius: var(--radius);
+  background: var(--foam);
+}
+
+.provenance p {
+  margin: 6px 0 0;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.provenance code {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  background: var(--paper);
+  border: 1px solid var(--sky-100);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+/* ---------- splash ---------- */
+
+.splash {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 8px;
+  text-align: center;
+  background: linear-gradient(160deg, var(--ocean-900), var(--ocean-500));
+  color: var(--paper);
+  padding: 24px;
+}
+
+.splash h1 {
+  font-size: 22px;
+  font-weight: 620;
+  margin: 0;
+}
+
+.splash p {
+  margin: 0;
+  color: var(--sky-200);
+  font-size: 13px;
+}
+
+.splash__hint code {
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.12);
+  padding: 2px 6px;
+  border-radius: 4px;
+}

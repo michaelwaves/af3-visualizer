@@ -77,6 +77,41 @@ export interface Chapter {
 /** Scene components receive nothing; they pull live state from the engine store. */
 export type SceneComponent = ComponentType
 
+/** One typeset expression, with the symbols it introduces spelled out. */
+export interface Equation {
+  /** Short title, e.g. "triangle multiplication, outgoing". */
+  label: string
+  /** KaTeX source, rendered in display mode. */
+  latex: string
+  /** Optional prose tying the equation back to the code. */
+  note?: string
+  /** Symbol glossary shown beneath, e.g. `z_{ij}` → "pair representation". */
+  where?: { symbol: string; meaning: string }[]
+}
+
+/** The maths and the implementation behind one chapter. */
+export interface ChapterReference {
+  equations?: Equation[]
+  /** Keys into the pack's source snippets, in reading order. */
+  snippets?: string[]
+}
+
+/** A verbatim excerpt of the model's own source. */
+export interface SourceSnippet {
+  symbol: string
+  file: string
+  startLine: number
+  endLine: number
+  lines: number
+  code: string
+}
+
+export interface SourceIndex {
+  repository: string
+  commit: string | null
+  snippets: Record<string, SourceSnippet>
+}
+
 /**
  * A self-contained description of one model. Swap the pack, keep the engine:
  * the narrative panel, camera director, primitives and layout are model-agnostic.
@@ -95,6 +130,8 @@ export interface ModelPack {
   pipeline: PipelineStage[]
   /** Matrices the inspector can show and export, derived from the loaded data. */
   inspectables: (data: Record<string, unknown>) => InspectableTensor[]
+  /** Maths and source excerpts, keyed by chapter id. */
+  reference: Record<string, ChapterReference>
   /** JSON payloads fetched once at boot, keyed by name. */
   data: Record<string, string>
 }

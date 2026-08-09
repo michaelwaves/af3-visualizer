@@ -12,7 +12,7 @@ export const embeddingChapters: Chapter[] = [
       {
         id: 'atom-transformer',
         text: 'The raw atom features first pass through a small *atom transformer*: 3 blocks, 4 heads, working inside those 27-atom windows.',
-        camera: { position: [0, 10, 21], target: [0, 0.5, 0.4] },
+        camera: { position: [-0.3, 0, 22], target: [-0.3, 0, 0] },
         highlight: ['atomTransformer'],
       },
       {
@@ -53,7 +53,7 @@ export const embeddingChapters: Chapter[] = [
       {
         id: 'idea',
         text: 'Before any learning happens, the pair representation is seeded with a purely positional signal: how far apart two tokens are in sequence, clipped at *r_max = 32*.',
-        camera: { position: [0, 13, 14], target: [0, 0, 0] },
+        camera: { position: [-0.8, -0.5, 18], target: [-0.8, -0.5, 0] },
         highlight: ['relpos'],
       },
       {

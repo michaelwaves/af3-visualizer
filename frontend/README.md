@@ -36,6 +36,7 @@ python tools/extract.py --offline       # skip UniProt species lookups
 | `activations.json` | pair maps and attention captured from a forward pass |
 | `predictions.json` | pLDDT, PAE and distogram from the confidence heads |
 | `diffusion.json` | the EDM noise schedule and the sampler's real trajectory |
+| `source.json` | verbatim source for 17 methods, with file, line range and commit |
 
 Model weights are randomly initialised, so shapes, schedules and dynamics are
 real but the predicted values are not a trained prediction. The payloads say so,
@@ -89,8 +90,11 @@ To add a pack — a PLM, Evo 2, Boltz, AlphaGenome:
    the top of the scene tracks where the reader is.
 5. Define `inspectables(data)` — the matrices the tensor inspector can show and
    export, each with the `Provenance` the extractor recorded.
-6. Export a `ModelPack` and point `data` at your JSON.
-7. Render it: `<Explainer pack={yourPack} />`.
+6. Define `reference` — per chapter, the `Equation[]` (KaTeX) and the source
+   snippet keys behind it. Snippets are pulled from the installed package by
+   `tools/source_extractor.py`, so they cannot drift from the code that ran.
+7. Export a `ModelPack` and point `data` at your JSON.
+8. Render it: `<Explainer pack={yourPack} />`.
 
 Reusable primitives worth knowing: `TensorSlab` (a matrix as a lit slab),
 `Caption` (billboarded label with a shape annotation), `Flow` (data moving

@@ -1,0 +1,66 @@
+/* The tabbed panel shell, and the maths inside it. */
+
+.panel--tabs {
+  overflow: hidden;
+}
+
+.tabs {
+  display: flex;
+  gap: 2px;
+  padding: 0 8px;
+  background: var(--fog-100);
+  border-bottom: 1px solid var(--line);
+}
+
+.tabs__tab {
+  padding: 9px 14px;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  border-bottom: 2px solid transparent;
+  transition: color 100ms ease, border-color 100ms ease;
+}
+
+.tabs__tab:hover {
+  color: var(--ocean-600);
+}
+
+.tabs__tab.is-active {
+  color: var(--ocean-800);
+  border-bottom-color: var(--ocean-500);
+  font-weight: 550;
+}
+
+.panel__body {
+  padding: 18px;
+  min-height: 220px;
+}
+
+.panel__empty {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-faint);
+  max-width: 60ch;
+}
+
+/* ---------- math ---------- */
+
+.math__line + .math__line {
+  margin-top: 14px;
+}
+
+.math__line {
+  margin: 0;
+}
+
+.math__tex {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 6px 2px;
+  color: var(--ocean-900);
+}
+
+.math__caption {
+  font-size: 11.5px;
+  color: var(--ink-faint);
+  text-align: center;
+}

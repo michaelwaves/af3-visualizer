@@ -889,6 +889,272 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* ---------- maths & code reference ---------- */
+
+.reference {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(34rem, 66%);
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--line);
+  background: rgba(8, 10, 14, 0.96);
+  backdrop-filter: blur(14px);
+  z-index: 29;
+}
+
+.reference-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.reference-head h2 {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.reference-head button {
+  border: 0;
+  background: none;
+  color: var(--dim);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.reference-head button:hover {
+  color: var(--text);
+}
+
+.reference-tabs {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.reference-tab {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  cursor: pointer;
+}
+
+.reference-tab:hover {
+  color: var(--text);
+}
+
+.reference-tab-on {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(79, 209, 197, 0.1);
+}
+
+.reference-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.reference-empty,
+.reference-foot {
+  color: var(--dim);
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.reference-foot {
+  padding: 0.65rem 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.65rem;
+}
+
+/* ---------- maths ---------- */
+
+.math-block {
+  margin-bottom: 1.4rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.math-block:last-child {
+  border-bottom: 0;
+}
+
+.math-block h4 {
+  margin: 0 0 0.55rem;
+  font-family: var(--mono);
+  font-size: 0.63rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.math-render {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5rem 0.2rem;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.math-render .katex-display {
+  margin: 0.3rem 0;
+}
+
+.math-note {
+  margin: 0.45rem 0 0;
+  font-family: var(--serif);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.math-where {
+  margin: 0.7rem 0 0;
+  padding-left: 0.2rem;
+}
+
+.math-where > div {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0.6rem;
+  padding: 0.16rem 0;
+}
+
+.math-where dt {
+  color: var(--accent);
+  font-size: 0.8rem;
+  text-align: right;
+  overflow-x: auto;
+}
+
+.math-where dd {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+/* ---------- code ---------- */
+
+.code-block {
+  margin-bottom: 1.3rem;
+}
+
+.code-block header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.code-symbol {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--accent);
+}
+
+.code-origin {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--dim);
+}
+
+.code-commit {
+  color: #f0a05a;
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 0.6rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #0a0c11;
+}
+
+.code-line {
+  display: flex;
+  gap: 0.8rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  line-height: 1.55;
+  white-space: pre;
+}
+
+.code-line:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.code-gutter {
+  flex: none;
+  width: 3.2rem;
+  padding-right: 0.4rem;
+  text-align: right;
+  color: #363d4d;
+  user-select: none;
+}
+
+.code-text {
+  padding-right: 1rem;
+  color: #c8cedd;
+}
+
+.tok-keyword {
+  color: #c792ea;
+}
+.tok-string {
+  color: #7bd88f;
+}
+.tok-comment {
+  color: #4a5162;
+  font-style: italic;
+}
+.tok-number {
+  color: #f0a05a;
+}
+.tok-decorator {
+  color: #fbbf24;
+}
+.tok-call {
+  color: #4fd1c5;
+}
+
+.code-more {
+  margin-top: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: none;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  cursor: pointer;
+}
+
+.code-more:hover {
+  color: var(--text);
+  border-color: var(--dim);
+}
+
 /* ---------- splash ---------- */
 
 .splash {

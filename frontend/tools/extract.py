@@ -50,7 +50,9 @@ def main(repo_root: Path, output_dir: Path, device: str, skip_model: bool, offli
         return
 
     from model_extractor import extract_model  # imported late: pulls in torch
+    from source_extractor import extract_source
 
+    report(extract_source(settings))
     profile = column_profile(settings.msa_a3m)
     for path in extract_model(replace_device(settings, device), sequence, profile):
         report(path)

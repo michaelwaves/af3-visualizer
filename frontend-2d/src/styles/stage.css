@@ -1,0 +1,130 @@
+/* The centre column: breadcrumb, title, signature, prose. */
+
+.crumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--ink-faint);
+  margin-bottom: 8px;
+}
+
+.crumb__stage {
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ocean-500);
+  font-size: 10px;
+}
+
+.crumb__sep {
+  color: var(--fog-400);
+}
+
+.crumb__loop {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--bridge);
+  background: #fdf0eb;
+  border: 1px solid #f4d5c9;
+  border-radius: 99px;
+  padding: 1px 9px;
+}
+
+.stage__title {
+  margin: 0;
+  font-size: 26px;
+  line-height: 1.2;
+  font-weight: 640;
+  letter-spacing: -0.02em;
+  color: var(--ocean-900);
+}
+
+.stage__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 9px 0 0;
+}
+
+.stage__module {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ocean-600);
+  background: var(--foam);
+  border: 1px solid var(--sky-100);
+  border-radius: var(--radius);
+  padding: 2px 8px;
+}
+
+.badge {
+  font-size: 10.5px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: var(--fog-200);
+  color: var(--slate-600);
+}
+
+.badge--algo {
+  background: var(--ocean-700);
+  color: var(--sky-100);
+  font-weight: 500;
+}
+
+.stage__summary {
+  margin: 12px 0 18px;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--slate-700);
+}
+
+/* ---------- signature ---------- */
+
+.flow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 14px;
+  align-items: stretch;
+  padding: 14px 16px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.flow__arrow {
+  align-self: center;
+  color: var(--sky-400);
+  font-size: 17px;
+}
+
+.flow__list {
+  list-style: none;
+  margin: 7px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.flow__item {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.flow__name {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--slate-700);
+}
+
+.flow__note,
+.flow__none {
+  font-size: 10.5px;
+  color: var(--ink-faint);
+  margin: 0;
+}

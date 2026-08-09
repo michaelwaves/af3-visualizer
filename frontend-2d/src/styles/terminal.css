@@ -1,0 +1,67 @@
+.terminal__log {
+  flex: 1;
+  overflow-y: auto;
+  /* Sit the log on the prompt, the way a real terminal fills from the bottom. */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 10px 16px 4px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+
+.terminal__line {
+  display: flex;
+  gap: 8px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.terminal__line--output .terminal__text {
+  color: var(--sky-100);
+}
+
+.terminal__line--note .terminal__text {
+  color: rgba(124, 196, 236, 0.78);
+}
+
+.terminal__line--error .terminal__text {
+  color: #f0a08a;
+}
+
+.terminal__line--input .terminal__text {
+  color: var(--paper);
+  font-weight: 600;
+}
+
+.terminal__caret {
+  color: var(--bridge);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.terminal__prompt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  cursor: text;
+}
+
+.terminal__input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--paper);
+  font: inherit;
+  caret-color: var(--bridge);
+}
+
+.terminal__input::placeholder {
+  color: rgba(174, 220, 245, 0.35);
+}

@@ -1,0 +1,27 @@
+/* Narrower viewports: shrink the rails, then stack the whole thing. */
+
+@media (max-width: 1280px) {
+  :root {
+    --rail: 216px;
+    --scope: 296px;
+  }
+}
+
+@media (max-width: 1040px) {
+  .app {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      'header'
+      'rail'
+      'stage'
+      'scope'
+      'term';
+    height: auto;
+    min-height: 100%;
+  }
+  .rail,
+  .scope {
+    max-height: 280px;
+  }
+}

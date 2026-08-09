@@ -30,7 +30,7 @@ export const ConfidenceScene = () => {
 
   return (
     <group>
-      <group position={[-5.6, 0.4, 0]}>
+      <group position={[-7.4, 0, 0]}>
         <BackboneTube
           points={structure.backbone}
           scale={0.11}
@@ -41,9 +41,9 @@ export const ConfidenceScene = () => {
           id="plddt"
           text="pLDDT"
           shape={`50 bins · ${predictions.atomCount} atoms`}
-          position={[0, 3, 0]}
+          position={[0, 3.2, 0]}
           color={palette.confidence}
-          size={0.28}
+          size={0.3}
         />
       </group>
 
@@ -52,8 +52,8 @@ export const ConfidenceScene = () => {
         matrix={predictions.pae ?? []}
         label="predicted aligned error"
         shape="64 bins · 0.5–32 Å"
-        position={[2.4, 0, -1.6]}
-        size={5}
+        position={[0, 0, 0]}
+        size={5.4}
         ramp={ramps.plddt}
         color={palette.confidence}
         visible={showPae > 0.05}
@@ -65,8 +65,8 @@ export const ConfidenceScene = () => {
         matrix={predictions.distogram}
         label="distogram"
         shape="64 bins · 2–22 Å"
-        position={[8.2, 0, 2.4]}
-        size={5}
+        position={[7, 0, 0]}
+        size={5.4}
         color={palette.pair}
         visible={showDistogram > 0.05}
         smooth

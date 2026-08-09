@@ -1,0 +1,52 @@
+/* The hover card used by the axis glossary and variable names. */
+
+.tooltip {
+  position: fixed;
+  z-index: 40;
+  max-width: 290px;
+  padding: 9px 11px;
+  background: var(--ocean-900);
+  color: var(--sky-100);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-pop);
+  font-size: 11.5px;
+  line-height: 1.5;
+  pointer-events: none;
+}
+
+.tooltip__head {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  margin-bottom: 4px;
+}
+
+.tooltip__symbol {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--sky-300);
+}
+
+.tooltip__name {
+  font-weight: 600;
+  color: var(--paper);
+}
+
+.tooltip__value {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  color: #f2a58a;
+}
+
+.tooltip__body,
+.tooltip__origin {
+  margin: 0;
+  color: rgba(217, 237, 250, 0.86);
+}
+
+.tooltip__origin {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: rgba(174, 220, 245, 0.62);
+}

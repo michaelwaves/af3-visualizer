@@ -61,7 +61,7 @@ export const tokenChapters: Chapter[] = [
       {
         id: 'intro',
         text: 'The featuriser turns the complex into a handful of plain arrays. This is the entire input surface of the model.',
-        camera: { position: [0, 15, 25], target: [0, 0, 0.4] },
+        camera: { position: [1.6, 0.4, 24], target: [1.6, 0.4, 0] },
       },
       {
         id: 'atom-inputs',

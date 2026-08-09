@@ -1,0 +1,125 @@
+import type { Step } from '../types'
+
+/** The MSA module: four blocks trading information with the pair map. */
+export const msaSteps: Step[] = [
+  {
+    id: 'msa_module',
+    stage: 'trunk',
+    title: 'Read the alignment',
+    module: 'MSAModule',
+    algorithm: 'Algorithm 8',
+    sourceSymbol: 'MSAModule.forward',
+    traceId: 'msa_module',
+    repeats: '×4 blocks',
+    summary: 'Four blocks that pass information between the 64 alignment rows and the pair map.',
+    detail: [
+      'The MSA module is where coevolution enters. The one-hot alignment is projected to 64 channels, the single representation is broadcast onto every row, and then four blocks alternate between two directions of flow: alignment → pair map, via the outer product mean, and pair map → alignment, via pair-weighted averaging.',
+      'AlphaFold 3 shrank this part sharply compared with AlphaFold 2, where the Evoformer was the centre of the model. Here it is four blocks and 2.7 M parameters — under 1 % of the network — feeding a trunk that is 159 M.',
+    ],
+    inputs: [
+      { name: 'msa', symbolic: 'b s n dmi', concrete: [1, 64, 199, 32] },
+      { name: 'single_repr', symbolic: 'b n ds', concrete: [1, 199, 384] },
+      { name: 'pairwise_repr', symbolic: 'b n n dp', concrete: [1, 199, 199, 128] },
+    ],
+    outputs: [{ name: 'embedded_msa', symbolic: 'b n n dp', concrete: [1, 199, 199, 128] }],
+  },
+  {
+    id: 'msa_init_proj',
+    stage: 'trunk',
+    title: 'Project the alignment into the MSA stream',
+    module: 'msa_init_proj',
+    traceId: 'msa_init_proj',
+    summary: '32 one-hot symbols plus 2 deletion features → 64 channels, then add the single stream.',
+    detail: [
+      'The one-hot alignment and its two deletion features are concatenated to 34 channels and projected to 64. Then the single representation — one vector per token — is broadcast across all 64 rows and added.',
+      'That broadcast is what ties the alignment to the target: every row starts out knowing what the query token is, so the module can spend its capacity on how the homologs *differ*.',
+    ],
+    math: [{ tex: 'm_{si} = W_m\\left[\\,x_{si} \\,\\Vert\\, \\text{del}_{si}\\,\\right] + W_s\\,s_i' }],
+    inputs: [{ name: 'msa', symbolic: 'b s n (dmi+dmf)', concrete: [1, 64, 199, 34] }],
+    outputs: [{ name: 'msa', symbolic: 'b s n dm', concrete: [1, 64, 199, 64] }],
+    defines: [
+      {
+        name: 'msa_repr',
+        symbolic: 'b s n dm',
+        concrete: [1, 64, 199, 64],
+        dtype: 'float32',
+        description: 'The working MSA representation inside the module. Lives only for these four blocks.',
+      },
+    ],
+  },
+  {
+    id: 'outer_product_mean',
+    stage: 'trunk',
+    title: 'Outer product mean — alignment into the pair map',
+    module: 'OuterProductMean',
+    algorithm: 'Algorithm 9',
+    sourceSymbol: 'OuterProductMean.forward',
+    traceId: 'outer_product_mean',
+    summary: 'For each token pair, average the outer product of their columns across all rows.',
+    detail: [
+      'This is the coevolution detector, and it is the reason the MSA is here at all. For a pair of columns i and j, project each to 32 hidden channels, take the outer product per alignment row, and average over rows. The result is 32 × 32 = 1024 numbers per pair, flattened and projected to the 128 pairwise channels.',
+      'If two columns mutate together across the alignment, their outer product has consistent structure and survives the averaging. If they vary independently, it averages toward zero. The pair map is being told which residues move together.',
+    ],
+    math: [
+      {
+        tex: 'o_{ij} = \\frac{1}{S}\\sum_{s=1}^{S} a_{si} \\otimes b_{sj} \\in \\mathbb{R}^{32 \\times 32}, \\qquad z_{ij} \\mathrel{+}= W\\,\\mathrm{flatten}(o_{ij})',
+      },
+      { tex: '1024 \\to 128 \\ \\text{channels, for each of } 199^2 = 39{,}601 \\ \\text{pairs}' },
+    ],
+    inputs: [{ name: 'msa', symbolic: 'b s n dm', concrete: [1, 64, 199, 64] }],
+    outputs: [{ name: 'pairwise', symbolic: 'b n n dp', concrete: [1, 199, 199, 128] }],
+  },
+  {
+    id: 'msa_pair_weighted_averaging',
+    stage: 'trunk',
+    title: 'Pair-weighted averaging — pair map back into the alignment',
+    module: 'MSAPairWeightedAveraging',
+    algorithm: 'Algorithm 10',
+    sourceSymbol: 'MSAPairWeightedAveraging.forward',
+    traceId: 'msa_pair_weighted_averaging',
+    summary: 'Mix along each row using attention weights that come from the pair map, not from the MSA.',
+    detail: [
+      'The return path. Each row of the alignment is mixed along its length, but the mixing weights are not computed from the row — they are a softmax over a projection of the pair map. Geometry decides which positions inform which.',
+      'A sigmoid gate, computed from the MSA itself, then decides how much of that mixture to let through. It is attention with the query and key halves replaced by something the trunk already knows.',
+    ],
+    math: [
+      { tex: 'w_{ij} = \\mathrm{softmax}_j\\!\\left(W_b\\,\\mathrm{LN}(z_{ij})\\right), \\qquad g_{si} = \\sigma\\!\\left(W_g\\,m_{si}\\right)' },
+      { tex: 'm_{si} \\leftarrow g_{si} \\odot \\sum_j w_{ij}\\, v_{sj}' },
+    ],
+    inputs: [
+      { name: 'msa', symbolic: 'b s n dm', concrete: [1, 64, 199, 64] },
+      { name: 'pairwise_repr', symbolic: 'b n n dp', concrete: [1, 199, 199, 128] },
+    ],
+    outputs: [{ name: 'msa', symbolic: 'b s n dm', concrete: [1, 64, 199, 64] }],
+  },
+  {
+    id: 'msa_transition',
+    stage: 'trunk',
+    title: 'MSA transition',
+    module: 'Transition',
+    algorithm: 'Algorithm 11',
+    sourceSymbol: 'Transition.forward',
+    traceId: 'msa_transition',
+    summary: 'A SwiGLU feed-forward with a 4× expansion, applied to every MSA cell.',
+    detail: [
+      'The same `Transition` block appears everywhere in AlphaFold 3 — on the MSA, on the pair map, on the single stream. It is a gated feed-forward: project up to 4× width in two halves, multiply one by SiLU of the other, project back down.',
+    ],
+    math: [{ tex: '\\mathrm{Transition}(x) = W_2\\left(\\mathrm{SiLU}(W_a x) \\odot W_b x\\right), \\quad \\dim(W_a x) = 4d' }],
+    inputs: [{ name: 'msa', symbolic: 'b s n dm', concrete: [1, 64, 199, 64] }],
+    outputs: [{ name: 'msa', symbolic: 'b s n dm', concrete: [1, 64, 199, 64] }],
+  },
+  {
+    id: 'msa_pairwise_final',
+    stage: 'trunk',
+    title: 'The MSA branch, before its gate',
+    module: 'msa_module.layers.3.3',
+    traceId: 'msa_pairwise_final',
+    summary: 'The last pairwise block of the MSA module — the signal just before LayerScale zeroes it.',
+    detail: [
+      'As with the template branch, `MSAModule` ends in a zero-initialised LayerScale, so its measured output at initialisation is exactly zero. This is the tensor one step earlier: the pair map the MSA branch actually produced, running at roughly ±8.',
+      'Comparing this against the outer-product-mean output a few steps back shows how much the four blocks amplify the signal before handing it on.',
+    ],
+    inputs: [{ name: 'pairwise_repr', symbolic: 'b n n dp', concrete: [1, 199, 199, 128] }],
+    outputs: [{ name: 'pairwise_repr', symbolic: 'b n n dp', concrete: [1, 199, 199, 128] }],
+  },
+]

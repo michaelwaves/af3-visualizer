@@ -1,0 +1,4 @@
+node_modules
+dist
+tools/__pycache__
+*.tsbuildinfo

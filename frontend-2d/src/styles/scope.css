@@ -1,0 +1,133 @@
+/* The right rail: variables in scope and the recorded call. */
+
+.scope__block {
+  padding: 16px 16px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.scope__hint {
+  margin: 4px 0 12px;
+  font-size: 11.5px;
+  color: var(--ink-faint);
+}
+
+.scope__hint code {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ocean-500);
+  word-break: break-all;
+}
+
+.scope__sub {
+  margin-top: 16px;
+  display: block;
+}
+
+.scope__list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.var {
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--fog-100);
+}
+
+.var.is-updated {
+  border-color: var(--sky-300);
+  background: var(--foam);
+}
+
+.var--out {
+  background: var(--paper);
+}
+
+.var__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.var__name {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ocean-700);
+  border-bottom: 1px dotted var(--fog-400);
+  cursor: help;
+  outline: none;
+}
+
+.var__name--plain {
+  border-bottom: none;
+  cursor: default;
+  color: var(--slate-700);
+  font-weight: 500;
+}
+
+.var__badge {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ocean-500);
+  background: var(--sky-100);
+  border-radius: 99px;
+  padding: 1px 6px;
+}
+
+.var__dtype,
+.var__shape {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+}
+
+.var__dtype {
+  margin-left: 8px;
+}
+
+.var__shape {
+  display: block;
+  color: var(--slate-600);
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--ink-faint);
+}
+
+.stats__count {
+  color: var(--fog-400);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 12px;
+  margin: 0;
+  font-size: 11.5px;
+}
+
+.facts dt {
+  color: var(--ink-faint);
+}
+
+.facts dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--slate-700);
+  word-break: break-word;
+}

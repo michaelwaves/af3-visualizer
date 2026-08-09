@@ -1,0 +1,77 @@
+/* The SVG line chart: marks thin, grid recessive, text in ink. */
+
+.chart {
+  margin: 14px 0 0;
+}
+
+.chart__svg {
+  width: 100%;
+  max-width: 620px;
+  display: block;
+  overflow: visible;
+}
+
+.chart__grid {
+  stroke: var(--fog-200);
+  stroke-width: 1;
+}
+
+.chart__axis {
+  stroke: var(--line-strong);
+  stroke-width: 1;
+}
+
+.chart__line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.chart__crosshair {
+  stroke: var(--fog-400);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.chart__dot {
+  stroke: var(--paper);
+  stroke-width: 2;
+}
+
+.chart__tick {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  fill: var(--ink-faint);
+  text-anchor: middle;
+}
+
+.chart__tick--y {
+  text-anchor: end;
+}
+
+.chart__label {
+  font-size: 9.5px;
+  fill: var(--ink-faint);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.chart__label--x {
+  text-anchor: end;
+}
+
+/* Direct labels stay in ink; the coloured mark beside them carries identity. */
+.chart__direct {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: var(--ink-soft);
+}
+
+.chart__readout {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ocean-600);
+  margin-top: 2px;
+  min-height: 16px;
+}

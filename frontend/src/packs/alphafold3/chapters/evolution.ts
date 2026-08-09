@@ -68,7 +68,7 @@ export const evolutionChapters: Chapter[] = [
       {
         id: 'outer-product',
         text: 'The alignment reaches the pair representation through the *outer product mean*. For every pair of columns i and j, take each sequence\'s pair of 32-wide projections, multiply them into a 32 × 32 outer product, and average over sequences.',
-        camera: { position: [0, 12, 22], target: [0, 0, 0.6] },
+        camera: { position: [0, 0, 21], target: [0, 0, 0] },
         highlight: ['opm'],
         shape: { name: 'outer_product_mean', dims: ['b', 'n', 'n', 'dp'] },
       },

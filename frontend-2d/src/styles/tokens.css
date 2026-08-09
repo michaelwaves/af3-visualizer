@@ -1,0 +1,93 @@
+/* San Francisco: ocean below, sky above, fog between. */
+
+:root {
+  --ocean-900: #071c33;
+  --ocean-800: #0b2745;
+  --ocean-700: #103458;
+  --ocean-600: #14486f;
+  --ocean-500: #1d6392;
+  --ocean-400: #2f85b5;
+  --sky-400: #4ea8de;
+  --sky-300: #7cc4ec;
+  --sky-200: #aedcf5;
+  --sky-100: #d9edfa;
+  --foam: #eef7fc;
+  --paper: #ffffff;
+  --fog-100: #f4f8fb;
+  --fog-200: #e6edf3;
+  --fog-300: #d3dee7;
+  --fog-400: #a9bccc;
+  --slate-500: #5d7a92;
+  --slate-600: #476076;
+  --slate-700: #2f4459;
+  --bridge: #d1552f;
+
+  --ink: #0d1f2d;
+  --ink-soft: #46617a;
+  --ink-faint: #7c94a8;
+
+  --line: #dbe6ee;
+  --line-strong: #c2d3e0;
+
+  --radius: 6px;
+  --radius-lg: 10px;
+
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+
+  --rail: 264px;
+  --scope: 340px;
+  --terminal: 210px;
+  --header: 92px;
+
+  --shadow-soft: 0 1px 2px rgba(13, 31, 45, 0.06), 0 4px 14px rgba(13, 31, 45, 0.05);
+  --shadow-pop: 0 8px 28px rgba(7, 28, 51, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--fog-100);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--sky-200);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Scrollbars, kept quiet so the panels stay calm. */
+*::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--fog-300);
+  border-radius: 99px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--fog-400);
+}

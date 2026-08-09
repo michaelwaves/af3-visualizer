@@ -21,7 +21,15 @@ export interface TensorSlabProps {
   range?: [number, number]
   smooth?: boolean
   opacity?: number
+  /**
+   * `facing` stands the slab up so its values read straight on; `flat` lays it
+   * down in the ground plane. Explicit `rotation` overrides both.
+   */
+  orientation?: 'facing' | 'flat'
 }
+
+/** The painted face is +Y, so a quarter turn about X brings it to face +Z. */
+const FACING_ROTATION: Vector3Tuple = [Math.PI / 2, 0, 0]
 
 /**
  * The workhorse primitive: a thin slab whose face shows real tensor values.
@@ -36,19 +44,21 @@ export const TensorSlab = ({
   size,
   thickness = 0.06,
   position = [0, 0, 0],
-  rotation = [0, 0, 0],
+  rotation,
   range,
   smooth = false,
   opacity = 1,
+  orientation = 'facing',
 }: TensorSlabProps) => {
   const texture = useMemo(
     () => matrixTexture(values, columns, rows, ramp, range, smooth),
     [values, columns, rows, ramp, range, smooth],
   )
   const highlighted = useHighlight(id)
+  const resolved = rotation ?? (orientation === 'facing' ? FACING_ROTATION : [0, 0, 0])
 
   return (
-    <group position={position} rotation={rotation}>
+    <group position={position} rotation={resolved}>
       <mesh>
         <boxGeometry args={[size[0], thickness, size[1]]} />
         <meshBasicMaterial

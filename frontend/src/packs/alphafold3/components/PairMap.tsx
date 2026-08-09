@@ -16,6 +16,7 @@ export interface PairMapProps {
   range?: [number, number]
   visible?: boolean
   smooth?: boolean
+  orientation?: 'facing' | 'flat'
 }
 
 /**
@@ -34,31 +35,28 @@ export const PairMap = ({
   range,
   visible = true,
   smooth = false,
+  orientation = 'facing',
 }: PairMapProps) => {
   if (!visible || !matrix?.length) return null
-  const rows = matrix.length
-  const flat = matrix.flat()
+
+  // A standing slab is captioned above it; a flat one is captioned behind it.
+  const captionAt: [number, number, number] =
+    orientation === 'facing' ? [0, size / 2 + 0.45, 0] : [0, 0.55, -size / 2 - 0.45]
 
   return (
     <group position={position}>
       <TensorSlab
         id={id}
-        values={flat}
-        rows={rows}
+        values={matrix.flat()}
+        rows={matrix.length}
         columns={matrix[0].length}
         ramp={ramp}
         size={[size, size]}
         range={range}
         smooth={smooth}
+        orientation={orientation}
       />
-      <Caption
-        id={id}
-        text={label}
-        shape={shape}
-        position={[0, 0.55, -size / 2 - 0.45]}
-        color={color}
-        size={0.3}
-      />
+      <Caption id={id} text={label} shape={shape} position={captionAt} color={color} size={0.3} />
     </group>
   )
 }
