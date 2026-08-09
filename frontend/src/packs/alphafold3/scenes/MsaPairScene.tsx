@@ -26,14 +26,12 @@ export const MsaPairScene = () => {
         />
       </group>
 
-      <Flow from={[-2.4, 1.2, 0]} to={[2.4, 1.2, 0]} color={palette.msa} arc={0.22} pulse />
-      <Caption
-        id="opm"
-        text="outer product mean"
-        shape="32 × 32 → 128"
-        position={[0, 2.1, 0]}
+      <Flow
+        from={[-2.4, 1.2, 0]}
+        to={[2.4, 1.2, 0]}
         color={palette.msa}
-        size={0.27}
+        label="outer product mean"
+        expression="mean over s of a_si × b_sj → 32×32 → 128"
       />
 
       <PairMap
@@ -50,17 +48,10 @@ export const MsaPairScene = () => {
           from={[2.4, -1.6, 0]}
           to={[-2.4, -1.6, 0]}
           color={palette.pair}
-          arc={-0.22}
           progress={back}
-          pulse
-        />
-        <Caption
-          id="pwa"
-          text="MSA pair-weighted averaging"
-          shape="pair → attention weights over columns"
-          position={[0, -3.3, 0]}
-          color={palette.pair}
-          size={0.26}
+          label="pair-weighted averaging"
+          expression="w_ij = softmax_j Linear(z_ij)"
+          labelOffset={-0.8}
         />
       </group>
     </group>

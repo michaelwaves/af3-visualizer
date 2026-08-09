@@ -54,7 +54,7 @@ export const ConfidenceScene = () => {
         shape="64 bins · 0.5–32 Å"
         position={[0, 0, 0]}
         size={5.4}
-        ramp={ramps.plddt}
+        ramp={ramps.pae}
         color={palette.confidence}
         visible={showPae > 0.05}
         smooth

@@ -1,0 +1,78 @@
+/* Boundary tensors, and the edges between everything. */
+
+.port {
+  width: 150px;
+  height: 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px 10px;
+  border-radius: 99px;
+  background: var(--sky-100);
+  border: 1px dashed var(--sky-300);
+}
+
+.port__name {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ocean-700);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.port__shape {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--ocean-500);
+}
+
+/* ---------- edges ---------- */
+
+.edge {
+  stroke: var(--fog-400);
+  stroke-width: 1.4;
+}
+
+.edge--loop {
+  stroke: var(--sky-300);
+  stroke-dasharray: 5 4;
+}
+
+.edge--lit {
+  stroke: var(--ocean-500);
+  stroke-width: 2;
+}
+
+.edge--faded {
+  stroke: var(--fog-300);
+}
+
+.edge-label {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 4px;
+  padding: 1px 5px;
+  line-height: 1.25;
+}
+
+.edge-label__tensor {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--slate-600);
+}
+
+.edge-label__shape {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  color: var(--sky-400);
+}
+
+.edge-label--loop .edge-label__tensor {
+  color: var(--sky-400);
+  font-style: italic;
+}

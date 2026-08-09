@@ -3,6 +3,7 @@ import { InspectorPanel } from './inspector/InspectorPanel'
 import { AxisLegend } from './narrative/AxisLegend'
 import { NarrativePanel } from './narrative/NarrativePanel'
 import { PipelineMap } from './narrative/PipelineMap'
+import { RawInputsPanel } from './reference/RawInputsPanel'
 import { ReferencePanel } from './reference/ReferencePanel'
 import { SceneCanvas } from './scene/SceneCanvas'
 import { useExplainer } from './store'
@@ -21,6 +22,8 @@ export const Explainer = ({ pack }: { pack: ModelPack }) => {
   const inspect = useExplainer((s) => s.inspect)
   const referenceOpen = useExplainer((s) => s.referenceOpen)
   const toggleReference = useExplainer((s) => s.toggleReference)
+  const rawInputsOpen = useExplainer((s) => s.rawInputsOpen)
+  const toggleRawInputs = useExplainer((s) => s.toggleRawInputs)
   const [status, setStatus] = useState<'loading' | 'ready' | 'failed'>('loading')
   useKeyboardNavigation()
 
@@ -40,7 +43,17 @@ export const Explainer = ({ pack }: { pack: ModelPack }) => {
     <main className="explainer">
       <header className="masthead">
         <h1>{pack.title}</h1>
-        <span className="masthead-sub">{pack.subtitle}</span>
+        <span className="masthead-sub">
+          {pack.subtitle}
+          {pack.target && (
+            <>
+              {' '}
+              <a href={pack.target.href} target="_blank" rel="noreferrer" title={pack.target.description}>
+                {pack.target.label}
+              </a>
+            </>
+          )}
+        </span>
         <a className="masthead-link" href={pack.source.href} target="_blank" rel="noreferrer">
           {pack.source.label} ↗
         </a>
@@ -54,7 +67,9 @@ export const Explainer = ({ pack }: { pack: ModelPack }) => {
         <AxisLegend />
         <InspectorPanel />
         <ReferencePanel />
+        <RawInputsPanel />
         <div className="stage-tools">
+          <button onClick={toggleRawInputs}>{rawInputsOpen ? 'close' : 'files'}</button>
           <button onClick={toggleReference}>{referenceOpen ? 'close' : 'maths & code'}</button>
           <button onClick={() => inspect(inspectedKey ? null : firstInspectable(pack))}>
             {inspectedKey ? 'close tensors' : 'inspect tensors'}

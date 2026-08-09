@@ -73,9 +73,8 @@ export const OverviewScene = () => {
         from={[0, 0.6, 0]}
         to={[0, blocks[blocks.length - 1].y - 0.6, 0]}
         color={palette.line}
-        arc={0}
-        radius={0.03}
         progress={assemble}
+        width={1}
       />
 
       <Caption

@@ -17,7 +17,7 @@ export const embeddingChapters: Chapter[] = [
       },
       {
         id: 'pool',
-        text: 'Its output is mean-pooled from 1,354 atoms up to 199 tokens, giving a 768-wide vector per token.',
+        text: 'Its output is mean-pooled from 1,354 atoms up to 199 tokens — 384 numbers each — then concatenated with the 33 per-token features. That 417-wide vector is `single_inputs`, and both representations are built from it.',
         drive: ['pool'],
         highlight: ['pooled'],
       },

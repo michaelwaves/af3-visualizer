@@ -10,12 +10,18 @@ import { evolutionChapters } from './chapters/evolution'
 import { geometryChapters } from './chapters/geometry'
 import { structureChapters } from './chapters/structure'
 import { confidenceChapters } from './chapters/confidence'
+import { foldedChapters } from './chapters/folded'
 import { scenes } from './scenes'
 
 export const alphafold3Pack: ModelPack = {
   id: 'alphafold3',
   title: 'AlphaFold 3, visualized',
-  subtitle: 'a walkthrough of the architecture, measured on a real complex',
+  subtitle: 'a walkthrough of inference on',
+  target: {
+    label: 'PDB 721P',
+    href: 'https://www.rcsb.org/structure/721P',
+    description: 'H-Ras P21 with a GTP analogue and magnesium — Krengel et al., 1990',
+  },
   source: {
     label: 'lucidrains/alphafold3-pytorch',
     href: 'https://github.com/lucidrains/alphafold3-pytorch',
@@ -27,6 +33,7 @@ export const alphafold3Pack: ModelPack = {
     ...evolutionChapters,
     ...geometryChapters,
     ...structureChapters,
+    ...foldedChapters,
     ...confidenceChapters,
   ],
   scenes,
@@ -37,6 +44,8 @@ export const alphafold3Pack: ModelPack = {
   data: {
     structure: 'data/structure.json',
     source: 'data/source.json',
+    raw: 'data/raw.json',
+    boltz: 'data/boltz.json',
     features: 'data/features.json',
     msa: 'data/msa.json',
     template: 'data/template.json',

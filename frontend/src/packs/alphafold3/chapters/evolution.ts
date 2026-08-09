@@ -5,7 +5,7 @@ export const evolutionChapters: Chapter[] = [
     id: 'msa',
     stage: 'msa',
     title: 'Fifteen thousand relatives',
-    blurb: 'Evolution as a measuring instrument.',
+    blurb: '15,953 homologues of this sequence, and what their variation reveals about contact.',
     section: 'Trunk',
     scene: 'msa',
     beats: [

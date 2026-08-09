@@ -1,0 +1,33 @@
+import type { GraphEdge } from '../types'
+
+/** Dataflow at the top level, read off `Alphafold3.forward`. */
+export const rootEdges: GraphEdge[] = [
+  { from: 'pdb', to: 'featurise', tensor: 'sequence + SMILES + ion', symbolic: 'str, SMILES, str' },
+  { from: 'pdb', to: 'msa_search', tensor: 'sequence', symbolic: 'str[166]' },
+  { from: 'msa_search', to: 'msa_features', tensor: 'a3m', symbolic: '15953 × 166' },
+  { from: 'template_source', to: 'template_features', tensor: 'mmCIF', symbolic: '166 residues' },
+  { from: 'featurise', to: 'input_embedder', tensor: 'atom_inputs', symbolic: 'b m dai', concrete: [1, 1354, 3] },
+  { from: 'featurise', to: 'input_embedder', tensor: 'atompair_inputs', symbolic: 'b nw w (w*2) dapi', concrete: [1, 51, 27, 54, 5] },
+  { from: 'msa_features', to: 'input_embedder', tensor: 'additional_token_feats', symbolic: 'b n dtf', concrete: [1, 199, 33] },
+  { from: 'featurise', to: 'relative_position_encoding', tensor: 'additional_molecule_feats', symbolic: 'b n 5', concrete: [1, 199, 5] },
+  { from: 'featurise', to: 'token_bond_feats', tensor: 'token_bonds', symbolic: 'b n n', concrete: [1, 199, 199] },
+  { from: 'input_embedder', to: 'trunk', tensor: 'single_init', symbolic: 'b n ds', concrete: [1, 199, 384] },
+  { from: 'input_embedder', to: 'trunk', tensor: 'pairwise_init', symbolic: 'b n n dp', concrete: [1, 199, 199, 128] },
+  { from: 'relative_position_encoding', to: 'trunk', tensor: 'relative_position_encoding', symbolic: 'b n n dpr', concrete: [1, 199, 199, 128] },
+  { from: 'token_bond_feats', to: 'trunk', tensor: 'token_bonds_feats', symbolic: 'b n n dp', concrete: [1, 199, 199, 128] },
+  { from: 'msa_features', to: 'trunk', tensor: 'msa', symbolic: 'b s n dmi', concrete: [1, 64, 199, 32] },
+  { from: 'template_features', to: 'trunk', tensor: 'templates', symbolic: 'b t n n dt', concrete: [1, 1, 199, 199, 108] },
+  { from: 'trunk', to: 'edm', tensor: 'single_trunk_repr', symbolic: 'b n dst', concrete: [1, 199, 384] },
+  { from: 'trunk', to: 'edm', tensor: 'pairwise_trunk', symbolic: 'b n n dpt', concrete: [1, 199, 199, 128] },
+  { from: 'input_embedder', to: 'edm', tensor: 'single_inputs_repr', symbolic: 'b n dsi', concrete: [1, 199, 417] },
+  { from: 'input_embedder', to: 'edm', tensor: 'atom_feats', symbolic: 'b m da', concrete: [1, 1354, 128] },
+  { from: 'relative_position_encoding', to: 'edm', tensor: 'pairwise_rel_pos_feats', symbolic: 'b n n dpr', concrete: [1, 199, 199, 128] },
+  { from: 'edm', to: 'structure', tensor: 'sampled_atom_pos', symbolic: 'b m 3', concrete: [1, 1354, 3] },
+  { from: 'edm', to: 'confidence_head', tensor: 'pred_atom_pos', symbolic: 'b m 3', concrete: [1, 1354, 3] },
+  { from: 'trunk', to: 'confidence_head', tensor: 'single_repr', symbolic: 'b n ds', concrete: [1, 199, 384] },
+  { from: 'trunk', to: 'confidence_head', tensor: 'pairwise_repr', symbolic: 'b n n dp', concrete: [1, 199, 199, 128] },
+  { from: 'input_embedder', to: 'confidence_head', tensor: 'single_inputs_repr', symbolic: 'b n dsi', concrete: [1, 199, 417] },
+  { from: 'trunk', to: 'distogram_head', tensor: 'pairwise_repr', symbolic: 'b n n dp', concrete: [1, 199, 199, 128] },
+  { from: 'confidence_head', to: 'confidences', tensor: 'pae, pde, plddt, resolved', symbolic: 'b l n n, b 50 m' },
+  { from: 'distogram_head', to: 'confidences', tensor: 'distance', symbolic: 'b l n n', concrete: [1, 64, 199, 199] },
+]

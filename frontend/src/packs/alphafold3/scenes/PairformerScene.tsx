@@ -59,8 +59,8 @@ export const PairformerScene = () => {
         to={[4.8, top * 0.45, 0]}
         color={palette.single}
         progress={showBias}
-        arc={0.08}
-        pulse
+        label="project to one scalar per head"
+        expression="Linear(LayerNorm(z)) → [b, 16, n, n]"
       />
 
       <group visible={showRecycle > 0.05}>
@@ -69,8 +69,8 @@ export const PairformerScene = () => {
           to={[-2.4, 0, 0]}
           color={palette.template}
           progress={showRecycle}
-          arc={-0.45}
-          pulse
+          label="recycle"
+          expression="detach → LayerNorm → +"
         />
         <Caption
           id="recycle"

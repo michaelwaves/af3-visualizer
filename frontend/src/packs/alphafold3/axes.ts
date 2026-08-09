@@ -16,7 +16,8 @@ export const alphafold3Axes: Record<string, AxisDefinition> = {
   dm: { label: 'MSA channels', meaning: 'width of the per-alignment-cell representation', size: 64, group: 'channels' },
   dt: { label: 'template features', meaning: 'distogram, unit vector, masks and both residue types', size: 108, group: 'channels' },
   d: { label: 'channels', meaning: 'feature width of the tensor in question', group: 'channels' },
-  dim: { label: 'width', meaning: 'hidden width of the transformer', size: 768, group: 'channels' },
+  dsi: { label: 'single inputs', meaning: 'pooled atom features (384) plus the 33 token features', size: 417, group: 'channels' },
+  dim: { label: 'token transformer width', meaning: 'hidden width inside the diffusion module', size: 768, group: 'channels' },
 
   dai: { label: 'atom inputs', meaning: 'reference-conformer features per atom', size: 3, group: 'inputs' },
   dapi: { label: 'atom-pair inputs', meaning: 'bond and same-residue features per atom pair', size: 5, group: 'inputs' },

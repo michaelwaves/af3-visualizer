@@ -41,13 +41,21 @@ export const EmbedderScene = () => {
         </group>
       )}
 
-      <Flow from={[-7.1, 0, 0]} to={[-4.4, 0, 0]} color={palette.atom} progress={pooled} arc={0.12} pulse />
+      <Flow
+        from={[-6.9, 0, 0]}
+        to={[-4.6, 0, 0]}
+        color={palette.atom}
+        progress={pooled}
+        label="mean-pool"
+        labelOffset={1.1}
+        expression="[m, 128] → [n, 384] · +33 feats → [n, 417]"
+      />
 
       <SingleSlab
         id="pooled"
         matrix={activations?.singleMaps.single_inputs}
-        label="pooled tokens"
-        shape="[n, dim]"
+        label="single_inputs"
+        shape="[b, n, dsi]"
         position={[-3.4, 0, 0]}
         size={[1.9, 4.4]}
         visible={pooled > 0.05}
@@ -73,8 +81,23 @@ export const EmbedderScene = () => {
         visible={pair > 0.05}
       />
 
-      <Flow from={[-2.4, 1.4, 0]} to={[-0.6, 2.3, 0]} color={palette.single} progress={single} arc={0.15} />
-      <Flow from={[-2.4, -1.4, 0]} to={[3.1, -0.6, 0]} color={palette.pair} progress={pair} arc={0.14} />
+      <Flow
+        from={[-2.4, 1.5, 0]}
+        to={[-0.9, 2.3, 0]}
+        color={palette.single}
+        progress={single}
+        label="Linear"
+        expression="417 → 384"
+      />
+      <Flow
+        from={[-2.4, -1.6, 0]}
+        to={[2.9, -0.8, 0]}
+        color={palette.pair}
+        progress={pair}
+        label="outer sum"
+        expression="Linear(a)_i + Linear(a)_j → [n, n, 128]"
+        labelOffset={-0.75}
+      />
     </group>
   )
 }

@@ -47,8 +47,8 @@ export const DiffusionScene = () => {
           </group>
         ))}
 
-        <Flow from={[-4.6, 0, 0]} to={[-1.8, 0, 0]} color={palette.atom} progress={drives.token} pulse />
-        <Flow from={[1.8, 0, 0]} to={[4.6, 0, 0]} color={palette.single} progress={drives.decoder} pulse />
+        <Flow from={[-4.6, 0, 0]} to={[-1.8, 0, 0]} color={palette.atom} progress={drives.token} label="pool to tokens" expression="[m, 128] → [n, 768]" />
+        <Flow from={[1.8, 0, 0]} to={[4.6, 0, 0]} color={palette.single} progress={drives.decoder} label="broadcast to atoms" expression="[n, 768] → [m, 3]" />
 
         <group visible={conditioning > 0.05}>
           <Caption

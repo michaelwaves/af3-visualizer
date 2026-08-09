@@ -33,6 +33,11 @@ export const ramps = {
   signed: rampFromStops(['#4fd1c5', '#134e4a', '#0b0d12', '#5b2333', '#f472b6']),
   /** The standard AlphaFold pLDDT ramp: orange = unconfident, blue = confident. */
   plddt: rampFromStops(['#ff7d45', '#ffdb13', '#65cbf3', '#0053d6']),
+  /**
+   * PAE runs the other way — low error is the good end — so dark means confident
+   * and pale means uncertain. Sharing the pLDDT ramp would invert the reading.
+   */
+  pae: rampFromStops(['#07312e', '#12645c', '#2f9e93', '#8fd9d0', '#f2fbfa']),
 } as const
 
 /** Colour a residue by pLDDT using AlphaFold's published bands. */

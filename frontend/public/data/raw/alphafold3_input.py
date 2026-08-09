@@ -1,0 +1,23 @@
+# Exactly what Alphafold3Input receives. No coordinates anywhere.
+from alphafold3_pytorch.inputs import Alphafold3Input
+
+alphafold3_input = Alphafold3Input(
+    proteins = [
+        'MTEYKLVVVGAGGVGKSALTIQLIQNHFVDEYDPTIEDSYRKQVVIDGETCLLDILDTAGLEEYSAMRDQYMRTGEGFLCVFAINNTKSFEDIHQYREQIKRVKDSDDVPMVLVGNKCDLAARTVESRQAQDLARSYGIPYIETSAKTRQGVEDAFYTLVREIRQH'
+    ],
+    ligands = ['Nc1nc2c(ncn2C2OC(COP(=O)(O)OP(=O)(O)NP(=O)(O)O)C(O)C2O)c(=O)[nH]1'],
+    metal_ions = ['Mg'],
+)
+
+# As JSON:
+{
+  "proteins": [
+    "MTEYKLVVVGAGGVGKSALTIQLIQNHFVDEYDPTIEDSYRKQVVIDGETCLLDILDTAGLEEYSAMRDQYMRTGEGFLCVFAINNTKSFEDIHQYREQIKRVKDSDDVPMVLVGNKCDLAARTVESRQAQDLARSYGIPYIETSAKTRQGVEDAFYTLVREIRQH"
+  ],
+  "ligands": [
+    "Nc1nc2c(ncn2C2OC(COP(=O)(O)OP(=O)(O)NP(=O)(O)O)C(O)C2O)c(=O)[nH]1"
+  ],
+  "metal_ions": [
+    "Mg"
+  ]
+}

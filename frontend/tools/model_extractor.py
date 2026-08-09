@@ -9,8 +9,11 @@ import torch
 
 from capture import Recorder, capture_attention
 from model_builder import BuiltModel, add_msa_and_templates, build_paper_scale_model
+from atom_metadata import build_atom_metadata
 from constants import NUM_MSA, NUM_SAMPLE_STEPS, NUM_TEMPLATES
-from output_payloads import diffusion_payload, prediction_payload
+from model_builder import GNP_SMILES
+from structure_export import write_pdb, write_prediction
+from output_payloads import _expected_plddt, diffusion_payload, prediction_payload
 from payloads import activation_payload, feature_payload, model_payload
 from settings import ExtractionSettings
 from writer import write_json
@@ -57,6 +60,25 @@ def extract_model(settings: ExtractionSettings, sequence: str, msa_profile=None)
         write_json(settings.target("predictions"), prediction_payload(logits, built)),
         write_json(settings.target("diffusion"), diffusion_payload(built, trajectory)),
         write_json(settings.target("features"), feature_payload(built)),
+        *_export_prediction(settings, built, trajectory, logits, sequence),
+    ]
+
+
+def _export_prediction(settings, built, trajectory, logits, sequence: str) -> list[Path]:
+    """Writes the final sampled coordinates as files a structure viewer can open."""
+    raw_dir = settings.output_dir / "raw"
+    raw_dir.mkdir(parents=True, exist_ok=True)
+
+    final = trajectory[-1, 0].float().cpu()
+    plddt = _expected_plddt(logits.plddt)
+    atoms = build_atom_metadata(
+        sequence, GNP_SMILES, "Mg", built.batch["molecule_atom_lens"][0].tolist()
+    )
+    title = "AlphaFold 3 (PyTorch reimplementation, untrained weights) - H-Ras + GNP + Mg"
+
+    return [
+        write_prediction(raw_dir / "predicted_structure.cif", final, atoms, plddt, title),
+        write_pdb(raw_dir / "predicted_structure.pdb", final, atoms, plddt),
     ]
 
 

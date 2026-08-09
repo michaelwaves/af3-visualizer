@@ -68,6 +68,16 @@ body {
   letter-spacing: 0.02em;
 }
 
+.masthead-sub a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(79, 209, 197, 0.35);
+}
+
+.masthead-sub a:hover {
+  border-bottom-color: var(--accent);
+}
+
 .masthead-link {
   margin-left: auto;
   color: var(--dim);
@@ -983,6 +993,64 @@ body {
   font-size: 0.65rem;
 }
 
+/* ---------- raw inputs ---------- */
+
+.raw-inputs {
+  width: min(44rem, 74%);
+}
+
+.raw-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+
+.raw-meta code {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  color: #f0a05a;
+}
+
+.raw-note {
+  color: var(--dim);
+  line-height: 1.45;
+}
+
+.raw-body pre {
+  margin: 0;
+  overflow-x: auto;
+  background: #0a0c11;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0.5rem 0;
+}
+
+.raw-body .code-text {
+  color: #aeb6c6;
+}
+
+.raw-download {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #141824;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.raw-download:hover {
+  border-color: var(--accent);
+}
+
 /* ---------- maths ---------- */
 
 .math-block {
@@ -1181,4 +1249,53 @@ body {
   .axis-legend {
     display: none;
   }
+}
+
+/* Roles in the files panel: what the model sees, and what it does not. */
+.raw-role {
+  align-self: flex-start;
+  padding: 0.1rem 0.45rem;
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.reference-tab .role-input,
+.reference-tab .role-output,
+.reference-tab .role-reference {
+  display: inline-block;
+  width: 0.42rem;
+  height: 0.42rem;
+  margin-right: 0.4rem;
+  border-radius: 50%;
+  vertical-align: baseline;
+}
+
+.role-input {
+  background: rgba(123, 216, 143, 0.16);
+  color: #7bd88f;
+}
+
+.reference-tab .role-input {
+  background: #7bd88f;
+}
+
+.role-output {
+  background: rgba(79, 209, 197, 0.16);
+  color: var(--accent);
+}
+
+.reference-tab .role-output {
+  background: var(--accent);
+}
+
+.role-reference {
+  background: rgba(240, 160, 90, 0.16);
+  color: #f0a05a;
+}
+
+.reference-tab .role-reference {
+  background: #f0a05a;
 }

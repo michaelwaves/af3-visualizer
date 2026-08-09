@@ -1,0 +1,78 @@
+/* Source snippets: the line-numbered listing and its syntax tokens. */
+
+.code__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.code__symbol {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ocean-700);
+}
+
+.code__origin {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ink-faint);
+}
+
+.code__commit {
+  margin-left: 6px;
+  color: var(--fog-400);
+}
+
+.code__body {
+  margin: 0;
+  max-height: 460px;
+  overflow: auto;
+  background: var(--ocean-900);
+  border-radius: var(--radius);
+  padding: 12px 0;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.6;
+}
+
+.code__line {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 12px;
+}
+
+.code__number {
+  text-align: right;
+  color: rgba(174, 220, 245, 0.32);
+  user-select: none;
+}
+
+.code__text {
+  color: var(--sky-100);
+  white-space: pre;
+}
+
+.tok--keyword {
+  color: #8fd0ff;
+}
+.tok--string {
+  color: #ffd9a8;
+}
+.tok--doc {
+  color: #9fb6c7;
+  font-style: italic;
+}
+.tok--comment {
+  color: #6f8ba1;
+  font-style: italic;
+}
+.tok--decorator {
+  color: #f2a58a;
+}
+.tok--number {
+  color: #b8e6c4;
+}

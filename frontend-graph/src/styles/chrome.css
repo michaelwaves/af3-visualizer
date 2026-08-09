@@ -1,0 +1,58 @@
+/* Breadcrumb, search and the provenance bar. */
+
+.crumbs {
+  grid-area: crumbs;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+}
+
+.crumbs__step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.crumbs__link {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ocean-500);
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.crumbs__link:hover {
+  background: var(--foam);
+}
+
+.crumbs__link.is-current {
+  color: var(--ocean-900);
+  font-weight: 600;
+}
+
+.crumbs__sep {
+  color: var(--fog-400);
+}
+
+.crumbs__count {
+  margin-left: auto;
+  font-size: 10.5px;
+  color: var(--ink-faint);
+}
+
+.crumbs__up {
+  font-size: 11px;
+  color: var(--ocean-600);
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  padding: 2px 9px;
+}
+
+.crumbs__up:hover {
+  border-color: var(--sky-400);
+  background: var(--foam);
+}

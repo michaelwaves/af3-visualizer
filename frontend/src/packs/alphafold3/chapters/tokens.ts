@@ -5,7 +5,7 @@ export const tokenChapters: Chapter[] = [
     id: 'tokens',
     stage: 'featurise',
     title: 'Tokens and atoms',
-    blurb: 'The one idea that lets a protein, a drug and an ion share a sequence model.',
+    blurb: 'A residue is one token. A ligand atom is also one token. Everything follows from that.',
     section: 'Inputs',
     scene: 'tokens',
     beats: [

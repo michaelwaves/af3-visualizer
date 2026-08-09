@@ -1,0 +1,131 @@
+/* Nodes and edges on the canvas. Quiet by default; the drawer carries detail. */
+
+.node {
+  width: 236px;
+  height: 74px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  padding: 9px 11px;
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(13, 31, 45, 0.05);
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.node:hover {
+  border-color: var(--sky-400);
+  box-shadow: 0 3px 12px rgba(13, 31, 45, 0.1);
+}
+
+.node.is-selected {
+  border-color: var(--ocean-500);
+  box-shadow: 0 0 0 2px var(--sky-200);
+}
+
+.node--source {
+  background: var(--foam);
+  border-style: dashed;
+}
+
+.node--sink {
+  background: var(--ocean-800);
+  border-color: var(--ocean-900);
+}
+
+.node--sink .node__label {
+  color: var(--paper);
+}
+
+.node--sink .node__module {
+  color: var(--sky-200);
+}
+
+.node--group {
+  border-left: 3px solid var(--ocean-500);
+}
+
+.node__head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.node__label {
+  font-size: 12.5px;
+  font-weight: 570;
+  color: var(--ocean-900);
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.node__algo {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--ocean-500);
+  white-space: nowrap;
+}
+
+.node__module {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.node__foot {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+/* The module name yields first when the footer runs out of room. */
+.node__foot .node__module {
+  flex: 1;
+  min-width: 0;
+}
+
+.node__repeat {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--bridge);
+}
+
+.node__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--sky-400);
+}
+
+.node__open {
+  font-size: 9.5px;
+  font-family: var(--font-mono);
+  color: var(--ocean-600);
+  background: var(--sky-100);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+.node__open:hover {
+  background: var(--sky-200);
+}
+
+.node__handle {
+  width: 5px;
+  height: 5px;
+  min-width: 5px;
+  min-height: 5px;
+  background: var(--fog-400);
+  border: none;
+}

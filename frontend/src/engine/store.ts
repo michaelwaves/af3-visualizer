@@ -14,6 +14,7 @@ interface ExplainerState {
   /** Key of the tensor open in the inspector, or null when it is closed. */
   inspectedKey: string | null
   referenceOpen: boolean
+  rawInputsOpen: boolean
   data: Record<string, unknown>
 
   loadPack: (pack: ModelPack, data: Record<string, unknown>) => void
@@ -27,6 +28,7 @@ interface ExplainerState {
   setHoveredAxis: (axis: string | null) => void
   inspect: (key: string | null) => void
   toggleReference: () => void
+  toggleRawInputs: () => void
 }
 
 export const useExplainer = create<ExplainerState>((set, get) => ({
@@ -39,6 +41,7 @@ export const useExplainer = create<ExplainerState>((set, get) => ({
   hoveredAxis: null,
   inspectedKey: null,
   referenceOpen: false,
+  rawInputsOpen: false,
   data: {},
 
   loadPack: (pack, data) => set({ pack, data }),
@@ -83,7 +86,9 @@ export const useExplainer = create<ExplainerState>((set, get) => ({
 
   inspect: (key) => set({ inspectedKey: key }),
 
-  toggleReference: () => set({ referenceOpen: !get().referenceOpen }),
+  toggleReference: () => set({ referenceOpen: !get().referenceOpen, rawInputsOpen: false }),
+
+  toggleRawInputs: () => set({ rawInputsOpen: !get().rawInputsOpen, referenceOpen: false }),
 }))
 
 /** Matrices the active pack exposes for inspection, in declaration order. */

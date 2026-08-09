@@ -39,7 +39,7 @@ export const BackboneTube = ({
       <mesh>
         <tubeGeometry args={[curve, segments, radius, 10, false]} />
         <meshStandardMaterial
-          color={color}
+          color={residueColors ? '#39414f' : color}
           roughness={0.45}
           metalness={0.1}
           transparent={opacity < 1}
@@ -47,9 +47,11 @@ export const BackboneTube = ({
         />
       </mesh>
 
+      {/* Beads sit just proud of the tube: any larger and they merge into a
+          blob that hides the fold they are meant to be colouring. */}
       {residueColors && (
         <Instances limit={points.length} range={points.length}>
-          <sphereGeometry args={[radius * 1.7, 10, 10]} />
+          <sphereGeometry args={[radius * 1.08, 10, 10]} />
           <meshStandardMaterial roughness={0.4} transparent={opacity < 1} opacity={opacity} />
           {points.map((point, index) => (
             <Instance

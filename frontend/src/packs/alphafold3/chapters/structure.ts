@@ -5,7 +5,7 @@ export const structureChapters: Chapter[] = [
     id: 'noise',
     stage: 'sample',
     title: 'Diffusion, and what it replaced',
-    blurb: 'AlphaFold 2 built frames. AlphaFold 3 denoises point clouds.',
+    blurb: 'Rigid residue frames are gone; coordinates come out of a denoiser instead.',
     section: 'Structure',
     scene: 'noise',
     beats: [

@@ -1,0 +1,52 @@
+/* Tensor shapes, and the hoverable axis symbols inside them. */
+
+.shape {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.shape__symbolic {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ocean-600);
+  background: var(--foam);
+  border-radius: var(--radius);
+  padding: 1px 7px;
+  border: 1px solid var(--sky-100);
+}
+
+.shape--out .shape__symbolic {
+  color: var(--ocean-800);
+  background: var(--sky-100);
+  border-color: var(--sky-200);
+}
+
+.shape__concrete {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ink-faint);
+}
+
+.dim {
+  cursor: help;
+  border-bottom: 1px dotted var(--sky-400);
+  outline: none;
+}
+
+.dim:hover,
+.dim:focus {
+  color: var(--bridge);
+  border-bottom-color: var(--bridge);
+}
+
+.dim--plain {
+  cursor: default;
+  border-bottom: none;
+  color: var(--ink-faint);
+}
+
+.shape__space {
+  white-space: pre;
+}

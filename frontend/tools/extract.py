@@ -16,6 +16,8 @@ import click
 from msa_extractor import extract_msa
 from msa_profile import column_profile
 from settings import ExtractionSettings
+from boltz_extractor import extract_boltz
+from raw_extractor import extract_raw_inputs
 from structure_extractor import extract_structure
 from template_extractor import extract_template
 
@@ -36,7 +38,20 @@ from template_extractor import extract_template
 @click.option("--device", default="cuda", help="Device to run the forward pass on.")
 @click.option("--skip-model", is_flag=True, help="Skip the GPU passes.")
 @click.option("--offline", is_flag=True, help="Skip UniProt species lookups.")
-def main(repo_root: Path, output_dir: Path, device: str, skip_model: bool, offline: bool) -> None:
+@click.option(
+    "--boltz-dir",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Directory of a Boltz prediction to import as the trained-model comparison.",
+)
+def main(
+    repo_root: Path,
+    output_dir: Path,
+    device: str,
+    skip_model: bool,
+    offline: bool,
+    boltz_dir: Path | None,
+) -> None:
     """Writes structure, MSA, template and model payloads into the output directory."""
     settings = ExtractionSettings(repo_root=repo_root.resolve(), output_dir=output_dir.resolve())
 
@@ -45,7 +60,12 @@ def main(repo_root: Path, output_dir: Path, device: str, skip_model: bool, offli
     report(extract_msa(settings, resolve_species=not offline))
     report(extract_template(settings, sequence))
 
+    if boltz_dir:
+        imported = extract_boltz(settings, boltz_dir.resolve())
+        report(imported) if imported else click.echo("  no Boltz prediction found")
+
     if skip_model:
+        report(extract_raw_inputs(settings, sequence))
         click.echo("skipped the model passes")
         return
 
@@ -56,6 +76,7 @@ def main(repo_root: Path, output_dir: Path, device: str, skip_model: bool, offli
     profile = column_profile(settings.msa_a3m)
     for path in extract_model(replace_device(settings, device), sequence, profile):
         report(path)
+    report(extract_raw_inputs(settings, sequence))
 
 
 def replace_device(settings: ExtractionSettings, device: str) -> ExtractionSettings:

@@ -4,8 +4,8 @@ export const settingChapters: Chapter[] = [
   {
     id: 'complex',
     stage: 'featurise',
-    title: 'One model, every molecule',
-    blurb: 'AlphaFold 2 folded protein chains. AlphaFold 3 predicts whole complexes.',
+    title: 'From protein chains to complexes',
+    blurb: 'The target: H-Ras, a GTP analogue and a magnesium ion, predicted together.',
     section: 'The problem',
     scene: 'complex',
     beats: [
@@ -36,8 +36,13 @@ export const settingChapters: Chapter[] = [
       },
       {
         id: 'unified',
-        text: 'Protein, ligand, ion — AlphaFold 3 predicts all three in one pass, with one set of weights. That unification is the whole point, and it drives every design decision that follows.',
+        text: 'AlphaFold 2 took one protein sequence and returned one chain. AlphaFold 3 takes proteins, nucleic acids, ligands, ions and modified residues in a single input and places every atom in one pass. Most of what follows is the machinery that change required.',
         camera: { position: [12, 7, 17], target: [0, 0.4, 0] },
+        drive: ['ligand', 'ion'],
+      },
+      {
+        id: 'not-an-input',
+        text: 'One thing to be clear about: the crystal structure is *not* an input. It is where the sequence and the list of bound molecules were read from, and it is the ground truth the prediction gets compared against. What the model receives is a sequence, a SMILES string and the word "Mg" — open *files* on the right to see exactly that.',
         drive: ['ligand', 'ion'],
       },
       {

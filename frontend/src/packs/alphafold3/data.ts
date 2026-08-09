@@ -118,6 +118,19 @@ export interface FeatureData {
   typeNames: string[]
 }
 
+export interface BoltzData {
+  model: { name: string; licence: string; href: string; note: string }
+  backbone: number[][]
+  residuePlddt: number[]
+  tokenPlddt: number[]
+  pae: number[][]
+  ligands: { code: string; kind: string; element: string[]; position: number[][] }[]
+  rmsdToCrystal: number
+  confidence: { score: number; ptm: number; iptm: number; complexPlddt: number }
+  counts: { atoms: number; residues: number; tokens: number }
+}
+
+export const useBoltz = () => usePackData<BoltzData>('boltz')
 export const useStructure = () => usePackData<StructureData>('structure')
 export const useFeatures = () => usePackData<FeatureData>('features')
 export const useMsa = () => usePackData<MsaData>('msa')

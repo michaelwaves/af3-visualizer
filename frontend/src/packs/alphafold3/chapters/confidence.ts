@@ -79,6 +79,11 @@ export const confidenceChapters: Chapter[] = [
         shape: { name: 'measured', dims: ['seconds', 'GB'], sizes: [7, 3], note: '199 tokens, 1354 atoms, 1 recycling step' },
       },
       {
+        id: 'export',
+        text: 'The sampled coordinates are written out as `predicted_structure.cif` and `.pdb`, with per-atom pLDDT in the B-factor column — the same convention AlphaFold uses. Both are in *files*, ready to open in PyMOL or ChimeraX.',
+        drive: ['assemble', 'sizes', 'measured'],
+      },
+      {
         id: 'end',
         text: 'That is the architecture: evolution and templates compressed into a pair matrix, triangles making it geometrically honest, and a diffusion model reading coordinates out of it.',
         camera: { position: [3.5, 1, 31], target: [3.5, -0.5, 0] },

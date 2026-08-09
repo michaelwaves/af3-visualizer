@@ -1,0 +1,140 @@
+/* The inspector drawer: everything known about the selected node. */
+
+.drawer--idle {
+  display: flex;
+  align-items: center;
+}
+
+.drawer__hint {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink-faint);
+}
+
+.chip-inline {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ocean-600);
+  background: var(--sky-100);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.drawer__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.drawer__title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 620;
+  letter-spacing: -0.015em;
+  color: var(--ocean-900);
+}
+
+.drawer__module {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+}
+
+.drawer__close {
+  font-size: 20px;
+  line-height: 1;
+  color: var(--fog-400);
+  padding: 0 4px;
+}
+
+.drawer__close:hover {
+  color: var(--slate-600);
+}
+
+.drawer__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 0;
+}
+
+.badge {
+  font-size: 10.5px;
+  padding: 2px 9px;
+  border-radius: 99px;
+  background: var(--fog-200);
+  color: var(--slate-600);
+}
+
+.badge--algo {
+  background: var(--ocean-700);
+  color: var(--sky-100);
+}
+
+.badge--open {
+  background: var(--sky-100);
+  color: var(--ocean-600);
+  border: 1px solid var(--sky-200);
+}
+
+.badge--open:hover {
+  background: var(--sky-200);
+}
+
+.drawer__summary {
+  margin: 11px 0 14px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--slate-700);
+}
+
+.tabs {
+  display: flex;
+  gap: 2px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tabs__tab {
+  padding: 7px 11px;
+  font-size: 11.5px;
+  color: var(--ink-faint);
+  border-bottom: 2px solid transparent;
+}
+
+.tabs__tab:hover {
+  color: var(--ocean-600);
+}
+
+.tabs__tab.is-active {
+  color: var(--ocean-800);
+  border-bottom-color: var(--ocean-500);
+  font-weight: 550;
+}
+
+.drawer__body {
+  padding-top: 14px;
+}
+
+.drawer__empty,
+.drawer__note {
+  font-size: 11.5px;
+  color: var(--ink-faint);
+  line-height: 1.6;
+}
+
+.prose p {
+  margin: 0 0 11px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--slate-700);
+}
+
+.prose code,
+.drawer__note code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--fog-200);
+  border-radius: 4px;
+  padding: 1px 4px;
+}

@@ -1,6 +1,9 @@
 import type { ComponentType } from 'react'
 import type { Vector3Tuple } from 'three'
 import type { InspectableTensor } from './inspector/types'
+import type { ChapterReference, PipelineStage } from './reference/types'
+
+export type * from './reference/types'
 
 /** Where the camera sits for a beat. Interpolated between beats by the director. */
 export interface CameraShot {
@@ -46,20 +49,6 @@ export interface AxisDefinition {
   group?: string
 }
 
-/** One step of the model's forward pass, named after the code that runs it. */
-export interface PipelineStage {
-  id: string
-  label: string
-  /** The class actually invoked, e.g. `PairformerStack`. */
-  module: string
-  /** Where it lives, for people who want to go read it. */
-  qualifiedName?: string
-  algorithm?: string
-  /** Marks stages that run inside the recycling loop. */
-  loop?: boolean
-  note?: string
-}
-
 export interface Chapter {
   id: string
   title: string
@@ -77,41 +66,6 @@ export interface Chapter {
 /** Scene components receive nothing; they pull live state from the engine store. */
 export type SceneComponent = ComponentType
 
-/** One typeset expression, with the symbols it introduces spelled out. */
-export interface Equation {
-  /** Short title, e.g. "triangle multiplication, outgoing". */
-  label: string
-  /** KaTeX source, rendered in display mode. */
-  latex: string
-  /** Optional prose tying the equation back to the code. */
-  note?: string
-  /** Symbol glossary shown beneath, e.g. `z_{ij}` → "pair representation". */
-  where?: { symbol: string; meaning: string }[]
-}
-
-/** The maths and the implementation behind one chapter. */
-export interface ChapterReference {
-  equations?: Equation[]
-  /** Keys into the pack's source snippets, in reading order. */
-  snippets?: string[]
-}
-
-/** A verbatim excerpt of the model's own source. */
-export interface SourceSnippet {
-  symbol: string
-  file: string
-  startLine: number
-  endLine: number
-  lines: number
-  code: string
-}
-
-export interface SourceIndex {
-  repository: string
-  commit: string | null
-  snippets: Record<string, SourceSnippet>
-}
-
 /**
  * A self-contained description of one model. Swap the pack, keep the engine:
  * the narrative panel, camera director, primitives and layout are model-agnostic.
@@ -122,6 +76,8 @@ export interface ModelPack {
   subtitle: string
   /** Credit line rendered in the title card. */
   source: { label: string; href: string }
+  /** What the walkthrough is actually run on, linked from the masthead. */
+  target?: { label: string; href: string; description?: string }
   chapters: Chapter[]
   scenes: Record<string, SceneComponent>
   /** Axis symbols used across the pack's shape annotations. */
