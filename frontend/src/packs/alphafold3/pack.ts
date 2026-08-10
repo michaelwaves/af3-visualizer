@@ -1,4 +1,5 @@
 import type { ModelPack } from '@engine/types'
+import { alphafold3Architecture } from './architecture'
 import { alphafold3Axes } from './axes'
 import { alphafold3Inspectables } from './inspectables'
 import { alphafold3Pipeline } from './pipeline'
@@ -39,6 +40,7 @@ export const alphafold3Pack: ModelPack = {
   scenes,
   axes: alphafold3Axes,
   pipeline: alphafold3Pipeline,
+  diagram: alphafold3Architecture,
   inspectables: alphafold3Inspectables,
   reference: alphafold3Reference,
   data: {

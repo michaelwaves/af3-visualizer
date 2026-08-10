@@ -2,6 +2,47 @@ import type { Chapter } from '@engine/types'
 
 export const settingChapters: Chapter[] = [
   {
+    id: 'inputs',
+    stage: 'featurise',
+    title: 'What the model is given',
+    blurb: 'Three strings: a sequence, a SMILES and an ion name. No coordinates.',
+    section: 'The problem',
+    scene: 'inputs',
+    beats: [
+      {
+        id: 'literal',
+        text: 'Start with the input, because it is easy to forget how little it is. This is the whole thing — the literal `Alphafold3Input` this walkthrough was run on. Every tensor, every activation and the final structure are built from what you can read on this screen.',
+        camera: { position: [0, 0.05, 8.6], target: [0, 0.05, 0] },
+        highlight: ['protein'],
+      },
+      {
+        id: 'sequence',
+        text: 'One protein: 166 characters of *amino acid sequence*. That is all AlphaFold 2 would have accepted, and it is where the 1,321 protein atoms come from — the featuriser knows what atoms each residue has.',
+        highlight: ['protein'],
+        shape: { name: 'proteins', dims: ['residues'], sizes: [166] },
+      },
+      {
+        id: 'smiles',
+        text: 'One ligand, as a *SMILES string*: GNP, a non-hydrolysable GTP analogue. RDKit expands it into an explicit graph of 32 heavy atoms. AlphaFold 2 had no way to say this at all.',
+        camera: { position: [0, -0.25, 7.9], target: [0, -0.25, 0] },
+        drive: ['ligand'],
+        highlight: ['ligand'],
+      },
+      {
+        id: 'ion',
+        text: 'And the word *"Mg"*. One magnesium ion, one atom, which coordinates the phosphates and holds the switch together.',
+        drive: ['ligand', 'ion'],
+        highlight: ['ion'],
+      },
+      {
+        id: 'no-coordinates',
+        text: 'Notice what is absent: there is not a single coordinate here. The structure you are about to watch being predicted is not in the input, and it is not in this repository\'s data caches either — it is the thing the network has to invent. Open *files* on the right to read the input verbatim.',
+        camera: { position: [0, 0.05, 8.9], target: [0, 0.05, 0] },
+        drive: ['ligand', 'ion'],
+      },
+    ],
+  },
+  {
     id: 'complex',
     stage: 'featurise',
     title: 'From protein chains to complexes',
@@ -11,7 +52,7 @@ export const settingChapters: Chapter[] = [
     beats: [
       {
         id: 'target',
-        text: 'This is 721p — the catalytic domain of *H-Ras*, the switch protein mutated in roughly a fifth of human cancers. Every number in this walkthrough comes from running the PyTorch model in this repository on this structure.',
+        text: 'Those three strings describe this: 721p — the catalytic domain of *H-Ras*, the switch protein mutated in roughly a fifth of human cancers. This is the crystal structure, the answer the prediction will be judged against, shown now so you know what the model is aiming at.',
         camera: { position: [10, 6, 15], target: [0, 0.4, 0] },
         highlight: ['protein'],
       },

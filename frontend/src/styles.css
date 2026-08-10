@@ -39,55 +39,9 @@ body {
 .explainer {
   display: grid;
   grid-template-columns: var(--panel) 1fr;
-  grid-template-rows: var(--masthead) 1fr;
-  grid-template-areas: 'masthead masthead' 'narrative stage';
+  grid-template-rows: auto 1fr;
+  grid-template-areas: 'diagram diagram' 'narrative stage';
   height: 100%;
-}
-
-.masthead {
-  grid-area: masthead;
-  display: flex;
-  align-items: baseline;
-  gap: 0.9rem;
-  padding: 0 1.5rem;
-  border-bottom: 1px solid var(--line);
-  background: linear-gradient(var(--surface), var(--bg));
-}
-
-.masthead h1 {
-  font-family: var(--serif);
-  font-size: 1.05rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  margin: 0;
-}
-
-.masthead-sub {
-  color: var(--muted);
-  font-size: 0.78rem;
-  letter-spacing: 0.02em;
-}
-
-.masthead-sub a {
-  color: var(--accent);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(79, 209, 197, 0.35);
-}
-
-.masthead-sub a:hover {
-  border-bottom-color: var(--accent);
-}
-
-.masthead-link {
-  margin-left: auto;
-  color: var(--dim);
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  text-decoration: none;
-}
-
-.masthead-link:hover {
-  color: var(--accent);
 }
 
 .narrative {
@@ -1298,4 +1252,221 @@ body {
 
 .reference-tab .role-reference {
   background: #f0a05a;
+}
+
+/* ---------- architecture diagram ---------- */
+
+.diagram {
+  grid-area: diagram;
+  padding: 0.3rem 1rem 0.35rem;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(var(--surface), var(--bg));
+}
+
+.diagram-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 1.7rem;
+}
+
+.diagram-toggle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.diagram-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.diagram-chevron {
+  color: var(--accent);
+  font-size: 0.55rem;
+}
+
+.diagram-standfirst {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.66rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.diagram-credits {
+  flex-shrink: 0;
+  display: flex;
+  gap: 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+}
+
+.diagram-credits a {
+  color: var(--dim);
+  text-decoration: none;
+}
+
+.diagram-credits a:hover {
+  color: var(--accent);
+}
+
+.diagram-svg {
+  display: block;
+  width: 100%;
+  /* Fixed height, fit-inside: the bar never grows as the window widens. */
+  height: 9.5rem;
+  margin-top: 0.1rem;
+}
+
+/* --- shapes --- */
+
+.diagram-shape {
+  fill: #12151d;
+  stroke: #2b3243;
+  stroke-width: 1;
+}
+
+.diagram-shape-lip {
+  stroke: #3a4356;
+}
+
+.diagram-node-swatch .diagram-shape {
+  stroke: none;
+}
+
+.diagram-node-chip .diagram-shape {
+  fill: #171b25;
+}
+
+.diagram-node-clickable {
+  cursor: pointer;
+}
+
+.diagram-node-clickable:hover .diagram-shape {
+  stroke: var(--accent);
+}
+
+.diagram-node-active .diagram-shape {
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  fill: #14212a;
+}
+
+.diagram-label {
+  fill: var(--text);
+  font-family: var(--sans);
+  font-size: 10px;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.diagram-sub,
+.diagram-caption {
+  fill: var(--muted);
+  font-size: 8.5px;
+}
+
+.diagram-caption {
+  font-family: var(--sans);
+  pointer-events: none;
+}
+
+.diagram-node-active .diagram-label {
+  fill: var(--accent);
+}
+
+/* --- wires --- */
+
+.diagram-wire {
+  fill: none;
+  stroke-width: 1.15;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.diagram-wire.is-dashed {
+  stroke-dasharray: 4 3;
+  opacity: 0.75;
+}
+
+/* Wires are stroked and never filled; arrowheads are filled and never stroked.
+   Grouping the two silently turns every path into a solid polygon. */
+.diagram-wire-input {
+  stroke: #d98c3e;
+}
+
+.diagram-wire-trunk {
+  stroke: #6ea6e0;
+}
+
+.diagram-wire-sample {
+  stroke: #56bd8c;
+}
+
+.diagram-head {
+  stroke: none;
+}
+
+.diagram-head-input {
+  fill: #d98c3e;
+}
+
+.diagram-head-trunk {
+  fill: #6ea6e0;
+}
+
+.diagram-head-sample {
+  fill: #56bd8c;
+}
+
+/* --- free-standing labels --- */
+
+.diagram-note {
+  font-family: var(--sans);
+  font-size: 9px;
+  fill: var(--muted);
+}
+
+.diagram-note-input {
+  fill: #d98c3e;
+}
+
+.diagram-note-trunk {
+  fill: #6ea6e0;
+}
+
+.diagram-note-sample {
+  fill: #56bd8c;
+}
+
+.diagram-note.is-faint {
+  font-family: var(--mono);
+  font-size: 7.5px;
+  fill: var(--dim);
+}
+
+.diagram-plus {
+  stroke: var(--muted);
+  stroke-width: 1.1;
+  fill: none;
+}
+
+.diagram-node-junction .diagram-shape {
+  fill: #0d1016;
 }

@@ -1,0 +1,110 @@
+import type { DiagramNode } from '@engine/narrative/architecture/types'
+
+/** Inputs and the embedder, laid out in the diagram's 1430 × 156 space.
+ *
+ * The space is deliberately wide and flat: the diagram is a top bar, so every
+ * pixel of height it takes is a pixel the 3D scene below it loses.
+ */
+export const inputNodes: DiagramNode[] = [
+  // --- searches -----------------------------------------------------------
+  {
+    id: 'template-search',
+    shape: 'cylinder',
+    x: 78,
+    y: 10,
+    width: 90,
+    height: 28,
+    label: 'Template search',
+    stage: 'templates',
+    note: 'An independent structure of the same protein, encoded as pairwise geometry.',
+  },
+  {
+    id: 'genetic-search',
+    shape: 'cylinder',
+    x: 78,
+    y: 48,
+    width: 90,
+    height: 28,
+    label: 'Genetic search',
+    stage: 'msa',
+    note: '15,953 homologs found by MMseqs2 over UniRef and an environmental set.',
+  },
+  {
+    id: 'conformer',
+    shape: 'cylinder',
+    x: 78,
+    y: 86,
+    width: 90,
+    height: 28,
+    label: 'Conformer gen.',
+    stage: 'featurise',
+    note: 'RDKit expands each ligand SMILES into an explicit heavy-atom graph.',
+  },
+
+  // --- input embedder and the two streams it creates -----------------------
+  {
+    id: 'input-embedder',
+    shape: 'box',
+    x: 250,
+    y: 10,
+    width: 62,
+    height: 120,
+    label: 'Input embedder',
+    sub: '(3 blocks)',
+    stage: 'embed',
+  },
+  {
+    id: 'inputs-swatch',
+    shape: 'swatch',
+    x: 320,
+    y: 17,
+    width: 28,
+    height: 11,
+    swatch: ['#1d7a5f', '#7fe3b8'],
+    stage: 'embed',
+    note: 'single_inputs — b n 417. Skips the whole trunk, straight to the denoiser.',
+    caption: { text: 'Inputs', x: 320, y: 38, anchor: 'start' },
+  },
+  {
+    id: 'pair-swatch',
+    shape: 'swatch',
+    x: 320,
+    y: 64,
+    width: 28,
+    height: 11,
+    swatch: ['#1c4f86', '#8fc3f2'],
+    stage: 'embed',
+    note: 'pairwise — b n n 128. The real object of interest in the trunk.',
+    caption: { text: 'Pair', x: 320, y: 85, anchor: 'start' },
+  },
+  {
+    id: 'single-swatch',
+    shape: 'swatch',
+    x: 320,
+    y: 110,
+    width: 28,
+    height: 11,
+    swatch: ['#8a3b2c', '#f0a98f'],
+    stage: 'embed',
+    note: 'single — b n 384. One vector per token.',
+    caption: { text: 'Single', x: 320, y: 131, anchor: 'start' },
+  },
+  {
+    id: 'pair-sum',
+    shape: 'junction',
+    x: 416,
+    y: 62,
+    width: 16,
+    height: 16,
+    note: 'pairwise_init + relative position encoding + token bonds, and the recycled pair map.',
+  },
+  {
+    id: 'single-sum',
+    shape: 'junction',
+    x: 416,
+    y: 108,
+    width: 16,
+    height: 16,
+    note: 'single_init plus the recycled single representation.',
+  },
+]

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { InspectorPanel } from './inspector/InspectorPanel'
 import { AxisLegend } from './narrative/AxisLegend'
 import { NarrativePanel } from './narrative/NarrativePanel'
+import { ArchitectureMap } from './narrative/ArchitectureMap'
 import { PipelineMap } from './narrative/PipelineMap'
 import { RawInputsPanel } from './reference/RawInputsPanel'
 import { ReferencePanel } from './reference/ReferencePanel'
@@ -41,29 +42,12 @@ export const Explainer = ({ pack }: { pack: ModelPack }) => {
 
   return (
     <main className="explainer">
-      <header className="masthead">
-        <h1>{pack.title}</h1>
-        <span className="masthead-sub">
-          {pack.subtitle}
-          {pack.target && (
-            <>
-              {' '}
-              <a href={pack.target.href} target="_blank" rel="noreferrer" title={pack.target.description}>
-                {pack.target.label}
-              </a>
-            </>
-          )}
-        </span>
-        <a className="masthead-link" href={pack.source.href} target="_blank" rel="noreferrer">
-          {pack.source.label} ↗
-        </a>
-      </header>
+      {pack.diagram ? <ArchitectureMap /> : <PipelineMap />}
 
       <NarrativePanel />
 
       <div className="stage">
         <SceneCanvas />
-        <PipelineMap />
         <AxisLegend />
         <InspectorPanel />
         <ReferencePanel />

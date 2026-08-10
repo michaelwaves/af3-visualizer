@@ -2,8 +2,10 @@ import type { ComponentType } from 'react'
 import type { Vector3Tuple } from 'three'
 import type { InspectableTensor } from './inspector/types'
 import type { ChapterReference, PipelineStage } from './reference/types'
+import type { ArchitectureDiagram } from './narrative/architecture/types'
 
 export type * from './reference/types'
+export type * from './narrative/architecture/types'
 
 /** Where the camera sits for a beat. Interpolated between beats by the director. */
 export interface CameraShot {
@@ -84,6 +86,8 @@ export interface ModelPack {
   axes: Record<string, AxisDefinition>
   /** The forward pass in execution order, for the progress map. */
   pipeline: PipelineStage[]
+  /** A laid-out architecture diagram. Packs without one fall back to the rail. */
+  diagram?: ArchitectureDiagram
   /** Matrices the inspector can show and export, derived from the loaded data. */
   inspectables: (data: Record<string, unknown>) => InspectableTensor[]
   /** Maths and source excerpts, keyed by chapter id. */

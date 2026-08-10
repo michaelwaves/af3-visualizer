@@ -1,4 +1,5 @@
 import type { SceneComponent } from '@engine/types'
+import { InputsScene } from './InputsScene'
 import { ComplexScene } from './ComplexScene'
 import { TokensScene } from './TokensScene'
 import { FeaturesScene } from './FeaturesScene'
@@ -17,6 +18,7 @@ import { OverviewScene } from './OverviewScene'
 
 /** Chapter `scene` keys resolve here. Adding a chapter means adding a scene. */
 export const scenes: Record<string, SceneComponent> = {
+  inputs: InputsScene,
   complex: ComplexScene,
   tokens: TokensScene,
   features: FeaturesScene,
